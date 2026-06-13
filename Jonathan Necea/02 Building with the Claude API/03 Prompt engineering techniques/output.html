@@ -1,0 +1,247 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Prompt Evaluation Report</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                margin: 0;
+                padding: 20px;
+                color: #333;
+            }
+            .header {
+                background-color: #f0f0f0;
+                padding: 20px;
+                border-radius: 5px;
+                margin-bottom: 20px;
+            }
+            .summary-stats {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .stat-box {
+                background-color: #fff;
+                border-radius: 5px;
+                padding: 15px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                flex-basis: 30%;
+                min-width: 200px;
+            }
+            .stat-value {
+                font-size: 24px;
+                font-weight: bold;
+                margin-top: 5px;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+            th {
+                background-color: #4a4a4a;
+                color: white;
+                text-align: left;
+                padding: 12px;
+            }
+            td {
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+                vertical-align: top;
+            }
+            tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+            .output-cell {
+                white-space: pre-wrap;
+            }
+            .score {
+                font-weight: bold;
+                padding: 5px 10px;
+                border-radius: 3px;
+                display: inline-block;
+            }
+            .score-high {
+                background-color: #c8e6c9;
+                color: #2e7d32;
+            }
+            .score-medium {
+                background-color: #fff9c4;
+                color: #f57f17;
+            }
+            .score-low {
+                background-color: #ffcdd2;
+                color: #c62828;
+            }
+            .output {
+                overflow: auto;
+                white-space: pre-wrap;
+            }
+
+            .output pre {
+                background-color: #f5f5f5;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                padding: 10px;
+                margin: 0;
+                font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+                font-size: 14px;
+                line-height: 1.4;
+                color: #333;
+                box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+                overflow-x: auto;
+                white-space: pre-wrap; 
+                word-wrap: break-word; 
+            }
+
+            td {
+                width: 20%;
+            }
+            .score-col {
+                width: 80px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Prompt Evaluation Report</h1>
+            <div class="summary-stats">
+                <div class="stat-box">
+                    <div>Total Test Cases</div>
+                    <div class="stat-value">4</div>
+                </div>
+                <div class="stat-box">
+                    <div>Average Score</div>
+                    <div class="stat-value">8.0 / 10</div>
+                </div>
+                <div class="stat-box">
+                    <div>Pass Rate (≥7)</div>
+                    <div class="stat-value">75.0%</div>
+                </div>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Scenario</th>
+                    <th>Prompt Inputs</th>
+                    <th>Solution Criteria</th>
+                    <th>Output</th>
+                    <th>Score</th>
+                    <th>Reasoning</th>
+                </tr>
+            </thead>
+            <tbody>
+    
+            <tr>
+                <td>Testing with dense technical passage containing domain-specific jargon and acronyms to verify the prompt handles specialized terminology and abbreviations correctly</td>
+                <td class="prompt-inputs"><strong>content:</strong> Recent advances in CRISPR-Cas9 gene editing have demonstrated significant improvements in off-target mitigation through the implementation of high-fidelity variants, particularly eSpCas9 and SpCas9-HF1, which reduce unintended genomic modifications by up to 95% compared to wild-type Cas9. Concurrent developments in base editing (BE) and prime editing (PE) technologies circumvent the need for double-strand breaks, enabling precise nucleotide conversion without DNA cleavage. Integration of machine learning algorithms for gRNA design has further enhanced specificity prediction, with deep learning models achieving 87% accuracy in forecasting off-target activity across the human genome. These methodological advances have accelerated therapeutic applications in somatic cell engineering and germline modification, though regulatory frameworks governing ex vivo versus in vivo CRISPR interventions remain contested across jurisdictions.</td>
+                <td class="criteria">• Correctly identifies domain-specific acronyms and abbreviations (CRISPR, Cas9, gRNA, BE, PE, etc.) as distinct topics or as part of relevant topics<br>• Extracts all major technical concepts and methodologies discussed in the passage<br>• Returns output as a JSON array of strings with no additional formatting or explanatory text</td>
+                <td class="output"><pre>```json
+[
+  "CRISPR-Cas9 gene editing",
+  "Off-target mitigation",
+  "High-fidelity variants",
+  "Base editing",
+  "Prime editing",
+  "Machine learning for gRNA design",
+  "Deep learning models",
+  "Somatic cell engineering",
+  "Germline modification",
+  "Regulatory frameworks"
+]
+```</pre></td>
+                <td class="score-col"><span class="score score-high">8</span></td>
+                <td class="reasoning">The solution meets all mandatory requirements: it provides a valid JSON array of strings containing topics, with no extra commentary or formatting. It successfully identifies major technical concepts and correctly handles domain-specific terminology. However, it has minor deficiencies in comprehensiveness regarding secondary criteria. Specifically, it misses some explicitly mentioned acronyms (eSpCas9, SpCas9-HF1) that could be considered distinct topics, and overlooks a few technical concepts that are discussed as important methodological distinctions in the passage. These are not critical omissions, but they represent incomplete extraction of all major technical concepts mentioned.</td>
+            </tr>
+        
+            <tr>
+                <td>Testing with interdisciplinary passage containing mixed topics from philosophy, psychology, and neuroscience to evaluate accurate topic extraction across multiple fields</td>
+                <td class="prompt-inputs"><strong>content:</strong> The intersection of phenomenological consciousness and neural correlates has emerged as a central concern in contemporary philosophy of mind. Recent neuroimaging studies demonstrate that subjective experiences of agency correlate with activity in the prefrontal cortex and supplementary motor area, yet this correlation raises questions about whether neural activity constitutes or merely accompanies conscious intention. From a psychological perspective, the sense of self appears to emerge through predictive processing mechanisms where the brain continuously generates models of bodily and environmental states. Furthermore, the binding problem—how disparate neural processes create unified conscious experience—remains contested, with some neuroscientists proposing that oscillatory synchronization across cortical regions facilitates integration, while philosophers argue this mechanistic account may be insufficient to explain the qualitative nature of subjective experience.</td>
+                <td class="criteria">• Extracts all major topics spanning philosophy (phenomenology, philosophy of mind, binding problem), psychology (sense of self, predictive processing), and neuroscience (neural correlates, neuroimaging, cortical activity, oscillatory synchronization)<br>• Returns output as a JSON array of strings with clear, distinct topic labels<br>• Avoids redundancy while capturing both overarching themes and specific technical concepts</td>
+                <td class="output"><pre>```json
+[
+  "Philosophy of Mind",
+  "Consciousness Studies",
+  "Neural Correlates of Consciousness",
+  "Phenomenology",
+  "Agency and Intention",
+  "Neuroimaging",
+  "Prefrontal Cortex",
+  "Supplementary Motor Area",
+  "Psychological Self",
+  "Predictive Processing",
+  "Binding Problem",
+  "Cortical Synchronization",
+  "Qualia"
+]
+```</pre></td>
+                <td class="score-col"><span class="score score-high">9</span></td>
+                <td class="reasoning">The solution fully satisfies all mandatory requirements: it is a valid JSON array of strings containing topics from the article with no extra commentary. Regarding secondary criteria, it successfully extracts topics spanning all three disciplines mentioned in the passage and avoids redundancy while capturing both broad themes and specific technical concepts. The inclusion of 'Qualia' is a minor interpretive liberty—while the concept is referenced through 'qualitative nature of subjective experience,' the exact term does not appear in the text. This is a borderline decision that slightly exceeds strict extraction but demonstrates good topical understanding. Overall, the solution is highly effective and meets the stated criteria comprehensively.</td>
+            </tr>
+        
+            <tr>
+                <td>Testing with ambiguous passage where topics overlap significantly to assess whether the prompt can disambiguate related concepts and avoid redundant extractions</td>
+                <td class="prompt-inputs"><strong>content:</strong> Recent advances in machine learning have significantly impacted natural language processing and computational linguistics, particularly through deep neural networks and transformer-based architectures. These neural network models, especially transformer models like BERT and GPT, have revolutionized text classification, semantic analysis, and language understanding tasks. The intersection of deep learning and NLP has enabled breakthrough applications in machine translation, sentiment analysis, and information extraction, though the computational linguistics community continues to debate whether these neural approaches adequately capture linguistic structure and grammatical theory that traditional symbolic methods emphasized. Furthermore, the performance improvements in language understanding tasks have raised questions about whether neural networks truly learn linguistic representations or merely exploit statistical patterns in training data.</td>
+                <td class="criteria">• Extracts distinct topics without redundancy (e.g., 'machine learning' and 'deep learning' should not both appear if one subsumes the other in this context)<br>• Disambiguates overlapping concepts by identifying separate but related topics (e.g., 'neural networks' and 'transformer architectures' as distinct topics)<br>• Captures all major topics mentioned across the passage<br>• Avoids overly specific subtopics that would fragment related concepts (e.g., 'BERT' and 'GPT' should be grouped under broader topic rather than listed separately)</td>
+                <td class="output"><pre>```json
+[
+  "Machine Learning",
+  "Natural Language Processing",
+  "Deep Neural Networks",
+  "Transformer-Based Architectures",
+  "BERT",
+  "GPT",
+  "Text Classification",
+  "Semantic Analysis",
+  "Language Understanding",
+  "Machine Translation",
+  "Sentiment Analysis",
+  "Information Extraction",
+  "Computational Linguistics",
+  "Linguistic Structure",
+  "Grammatical Theory",
+  "Symbolic Methods",
+  "Linguistic Representations",
+  "Statistical Patterns"
+]
+```</pre></td>
+                <td class="score-col"><span class="score score-medium">6</span></td>
+                <td class="reasoning">The solution successfully meets all mandatory requirements by providing a valid JSON array containing only topic strings with no commentary. However, it violates the secondary criterion about avoiding overly specific subtopics that fragment related concepts. The inclusion of 'BERT' and 'GPT' as separate entries directly contradicts the guidance that such specific model names should be grouped under broader topics rather than listed separately. While the solution is comprehensive and captures major topics, the granularity level is inconsistent with the stated criteria about avoiding unnecessary fragmentation of related concepts.</td>
+            </tr>
+        
+            <tr>
+                <td>Testing with sparse passage containing minimal explicit topic markers to evaluate the prompt's ability to infer and identify implicit topics from context clues alone</td>
+                <td class="prompt-inputs"><strong>content:</strong> The specimens exhibited morphological variations consistent with adaptive radiation patterns. Isotopic analysis of skeletal remains suggested dietary shifts across the temporal sequence, while sedimentary context indicated environmental transitions. Phylogenetic inference based on comparative anatomy positioned these organisms within a broader evolutionary framework, though direct molecular evidence remained unavailable due to preservation constraints.</td>
+                <td class="criteria">• Identifies implicit topics inferable from context clues (e.g., evolution, paleontology, environmental change) despite absence of explicit topic markers<br>• Extracts topics in valid JSON array of strings format<br>• Captures at least 4 distinct topics from the passage</td>
+                <td class="output"><pre>```json
+[
+  "Adaptive Radiation",
+  "Morphological Variation",
+  "Isotopic Analysis",
+  "Dietary Shifts",
+  "Skeletal Remains",
+  "Sedimentary Context",
+  "Environmental Transitions",
+  "Phylogenetic Inference",
+  "Comparative Anatomy",
+  "Evolutionary Framework",
+  "Molecular Evidence",
+  "Preservation Constraints"
+]
+```</pre></td>
+                <td class="score-col"><span class="score score-high">9</span></td>
+                <td class="reasoning">The solution fully satisfies all mandatory requirements: it provides a valid JSON array of strings with only topic names and no commentary, contains each topic mentioned in the passage, and includes nothing else. It exceeds the secondary criteria by identifying 12 topics (well above the 4-topic minimum) and successfully infers implicit topics from context clues (e.g., 'Evolutionary Framework' captures the evolution theme, 'Comparative Anatomy' and 'Skeletal Remains' indicate paleontology). While some extracted items are more granular descriptive elements than primary research topics, they are all legitimately inferable from the passage and represent distinct concepts. The extraction is comprehensive and contextually appropriate.</td>
+            </tr>
+        
+            </tbody>
+        </table>
+    </body>
+    </html>
+    
