@@ -13,7 +13,7 @@ MCP Chat is a command-line interface application that enables interactive chat c
 
 1. Create or edit the `.env` file in the project root and verify that the following variables are set correctly:
 
-```
+```text
 ANTHROPIC_API_KEY=""  # Enter your Anthropic API secret key
 ```
 
@@ -29,20 +29,20 @@ ANTHROPIC_API_KEY=""  # Enter your Anthropic API secret key
 pip install uv
 ```
 
-2. Create and activate a virtual environment:
+2.Create and activate a virtual environment:
 
 ```bash
 uv venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 ```
 
-3. Install dependencies:
+3.Install dependencies:
 
 ```bash
 uv pip install -e .
 ```
 
-4. Run the project
+4.Run the project
 
 ```bash
 uv run main.py
@@ -57,13 +57,13 @@ python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 ```
 
-2. Install dependencies:
+2.Install dependencies:
 
 ```bash
 pip install anthropic python-dotenv prompt-toolkit "mcp[cli]==1.8.0"
 ```
 
-3. Run the project
+3.Run the project
 
 ```bash
 python main.py
@@ -79,7 +79,7 @@ Simply type your message and press Enter to chat with the model.
 
 Use the @ symbol followed by a document ID to include document content in your query:
 
-```
+```text
 > Tell me about @deposition.md
 ```
 
@@ -87,7 +87,7 @@ Use the @ symbol followed by a document ID to include document content in your q
 
 Use the / prefix to execute commands defined in the MCP server:
 
-```
+```text
 > /summarize deposition.md
 ```
 
