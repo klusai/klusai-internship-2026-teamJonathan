@@ -1,0 +1,49 @@
+[
+  {
+    "prompt_inputs": {
+      "height": "178 cm",
+      "weight": "68 kg",
+      "goal": "Prepare for marathon race in 2 weeks with optimal carbohydrate loading and energy timing",
+      "restrictions": "Vegetarian, no nuts"
+    },
+    "solution_criteria": [
+      "Meal plan spans exactly 1 day with breakfast, lunch, dinner, and pre/post-workout snacks",
+      "Total daily calories and carbohydrate intake appropriate for marathon training phase",
+      "Pre-workout and post-workout nutrition timed strategically around training session",
+      "All meals and snacks respect vegetarian and nut-free restrictions"
+    ],
+    "task_description": "Write a compact, concise 1 day meal plan for a single athlete.",
+    "scenario": "Testing with a professional endurance athlete (marathon runner) requiring high-carbohydrate intake and specific pre/post-workout nutrition timing"
+  },
+  {
+    "prompt_inputs": {
+      "height": "178",
+      "weight": "75",
+      "goal": "general fitness and performance",
+      "restrictions": "none"
+    },
+    "solution_criteria": [
+      "Meal plan covers all 3 meals (breakfast, lunch, dinner) for a single day",
+      "Nutritionally balanced with adequate protein, carbohydrates, and healthy fats suitable for an athlete",
+      "Concise format that is easy to read and implement"
+    ],
+    "task_description": "Write a compact, concise 1 day meal plan for a single athlete.",
+    "scenario": "Testing with a sport-agnostic athlete and minimal dietary restrictions to verify the prompt generates a balanced, generalizable meal plan without over-specialization"
+  },
+  {
+    "prompt_inputs": {
+      "height": "178 cm",
+      "weight": "82 kg",
+      "goal": "Maximize strength gains and muscle recovery from weightlifting training",
+      "restrictions": "None"
+    },
+    "solution_criteria": [
+      "Meal plan spans exactly 1 day with 4-5 meals",
+      "Protein distributed across meals (minimum 25g per meal, ~2.0-2.2g per kg bodyweight total)",
+      "Includes pre-workout and post-workout nutrition timing",
+      "Compact format with meal names, portions, and key macros"
+    ],
+    "task_description": "Write a compact, concise 1 day meal plan for a single athlete.",
+    "scenario": "Testing with a strength-sport athlete (weightlifter) needing elevated protein distribution across meals and recovery-focused nutrition"
+  }
+]

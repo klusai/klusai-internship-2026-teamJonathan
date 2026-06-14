@@ -1,0 +1,17 @@
+[
+  {
+    "task": "Create a JSON configuration object for an AWS S3 bucket policy that allows public read access to all objects",
+    "format": "json",
+    "solution_criteria": "Valid JSON with proper S3 bucket policy structure, Principal set to '*', Action set to 's3:GetObject', Effect set to 'Allow', and Resource pointing to all objects in the bucket"
+  },
+  {
+    "task": "Write a Python function that takes an AWS CloudWatch log message and extracts the timestamp and error code using a single regex pattern",
+    "format": "python",
+    "solution_criteria": "Function accepts a log string, uses a single regex pattern to extract timestamp and error code, returns a tuple or dict with both values, handles edge cases gracefully"
+  },
+  {
+    "task": "Create a regular expression that validates AWS IAM role ARN format (arn:aws:iam::account-id:role/role-name)",
+    "format": "regex",
+    "solution_criteria": "Regex correctly matches valid IAM role ARNs, validates account-id as 12 digits, allows alphanumeric characters and hyphens in role names, rejects invalid formats"
+  }
+]
