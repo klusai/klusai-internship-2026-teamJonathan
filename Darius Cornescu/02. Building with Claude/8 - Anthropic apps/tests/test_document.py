@@ -3,6 +3,8 @@ import pytest
 from tools.document import (
     binary_document_to_markdown,
     document_path_to_markdown,
+    compute_text_stats,
+    document_stats,
 )
 
 
@@ -77,3 +79,71 @@ class TestBinaryDocumentToMarkdown:
         assert len(result) > 0
         # Check for typical markdown formatting - this will depend on your actual test file
         assert "#" in result or "-" in result or "*" in result
+
+
+class TestComputeTextStats:
+    def test_empty_string_has_zero_counts(self):
+        """An empty string yields zero words, chars, and lines."""
+        assert compute_text_stats("") == {
+            "word_count": 0,
+            "char_count": 0,
+            "line_count": 0,
+        }
+
+    def test_whitespace_only_has_zero_words(self):
+        """Whitespace-only text has no words; chars count the whitespace."""
+        stats = compute_text_stats("   \n  \t ")
+        assert stats["word_count"] == 0
+        assert stats["char_count"] == len("   \n  \t ")
+
+    def test_counts_words_chars_and_lines(self):
+        """Counts are computed from whitespace tokens, length, and lines."""
+        text = "hello world\nsecond line here"
+        assert compute_text_stats(text) == {
+            "word_count": 5,
+            "char_count": len(text),
+            "line_count": 2,
+        }
+
+
+class TestDocumentStats:
+    FIXTURES_DIR = os.path.join(os.path.dirname(__file__), "fixtures")
+    DOCX_FIXTURE = os.path.join(FIXTURES_DIR, "mcp_docs.docx")
+    PDF_FIXTURE = os.path.join(FIXTURES_DIR, "mcp_docs.pdf")
+
+    def test_document_stats_with_docx(self):
+        """A DOCX path returns all three integer counts, each positive."""
+        stats = document_stats(self.DOCX_FIXTURE)
+
+        assert set(stats.keys()) == {"word_count", "char_count", "line_count"}
+        assert all(isinstance(v, int) for v in stats.values())
+        assert stats["word_count"] > 0
+        assert stats["char_count"] > 0
+        assert stats["line_count"] > 0
+
+    def test_document_stats_with_pdf(self):
+        """A PDF path returns all three integer counts, each positive."""
+        stats = document_stats(self.PDF_FIXTURE)
+
+        assert set(stats.keys()) == {"word_count", "char_count", "line_count"}
+        assert all(isinstance(v, int) for v in stats.values())
+        assert stats["word_count"] > 0
+        assert stats["char_count"] > 0
+        assert stats["line_count"] > 0
+
+    def test_document_stats_are_internally_consistent(self):
+        """Char count is at least word count, and there is at least one line."""
+        stats = document_stats(self.DOCX_FIXTURE)
+        assert stats["char_count"] >= stats["word_count"]
+        assert stats["line_count"] >= 1
+
+    def test_document_stats_unsupported_extension(self):
+        """Unsupported extensions raise ValueError (inherited guard)."""
+        with pytest.raises(ValueError):
+            document_stats("some_file.txt")
+
+    def test_document_stats_missing_file(self):
+        """A nonexistent path raises FileNotFoundError (inherited guard)."""
+        missing = os.path.join(self.FIXTURES_DIR, "does_not_exist.pdf")
+        with pytest.raises(FileNotFoundError):
+            document_stats(missing)
