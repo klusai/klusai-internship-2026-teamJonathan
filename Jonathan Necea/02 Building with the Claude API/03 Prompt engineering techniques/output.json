@@ -1,0 +1,71 @@
+[
+  {
+    "output": "```json\n[\n  \"CRISPR-Cas9 gene editing\",\n  \"Off-target mitigation\",\n  \"High-fidelity variants\",\n  \"Base editing\",\n  \"Prime editing\",\n  \"Machine learning for gRNA design\",\n  \"Deep learning models\",\n  \"Somatic cell engineering\",\n  \"Germline modification\",\n  \"Regulatory frameworks\"\n]\n```",
+    "test_case": {
+      "prompt_inputs": {
+        "content": "Recent advances in CRISPR-Cas9 gene editing have demonstrated significant improvements in off-target mitigation through the implementation of high-fidelity variants, particularly eSpCas9 and SpCas9-HF1, which reduce unintended genomic modifications by up to 95% compared to wild-type Cas9. Concurrent developments in base editing (BE) and prime editing (PE) technologies circumvent the need for double-strand breaks, enabling precise nucleotide conversion without DNA cleavage. Integration of machine learning algorithms for gRNA design has further enhanced specificity prediction, with deep learning models achieving 87% accuracy in forecasting off-target activity across the human genome. These methodological advances have accelerated therapeutic applications in somatic cell engineering and germline modification, though regulatory frameworks governing ex vivo versus in vivo CRISPR interventions remain contested across jurisdictions."
+      },
+      "solution_criteria": [
+        "Correctly identifies domain-specific acronyms and abbreviations (CRISPR, Cas9, gRNA, BE, PE, etc.) as distinct topics or as part of relevant topics",
+        "Extracts all major technical concepts and methodologies discussed in the passage",
+        "Returns output as a JSON array of strings with no additional formatting or explanatory text"
+      ],
+      "task_description": "Extract topics out of a passage of text from a scholarly article into a JSON array of strings",
+      "scenario": "Testing with dense technical passage containing domain-specific jargon and acronyms to verify the prompt handles specialized terminology and abbreviations correctly"
+    },
+    "score": 8,
+    "reasoning": "The solution meets all mandatory requirements: it provides a valid JSON array of strings containing topics, with no extra commentary or formatting. It successfully identifies major technical concepts and correctly handles domain-specific terminology. However, it has minor deficiencies in comprehensiveness regarding secondary criteria. Specifically, it misses some explicitly mentioned acronyms (eSpCas9, SpCas9-HF1) that could be considered distinct topics, and overlooks a few technical concepts that are discussed as important methodological distinctions in the passage. These are not critical omissions, but they represent incomplete extraction of all major technical concepts mentioned."
+  },
+  {
+    "output": "```json\n[\n  \"Philosophy of Mind\",\n  \"Consciousness Studies\",\n  \"Neural Correlates of Consciousness\",\n  \"Phenomenology\",\n  \"Agency and Intention\",\n  \"Neuroimaging\",\n  \"Prefrontal Cortex\",\n  \"Supplementary Motor Area\",\n  \"Psychological Self\",\n  \"Predictive Processing\",\n  \"Binding Problem\",\n  \"Cortical Synchronization\",\n  \"Qualia\"\n]\n```",
+    "test_case": {
+      "prompt_inputs": {
+        "content": "The intersection of phenomenological consciousness and neural correlates has emerged as a central concern in contemporary philosophy of mind. Recent neuroimaging studies demonstrate that subjective experiences of agency correlate with activity in the prefrontal cortex and supplementary motor area, yet this correlation raises questions about whether neural activity constitutes or merely accompanies conscious intention. From a psychological perspective, the sense of self appears to emerge through predictive processing mechanisms where the brain continuously generates models of bodily and environmental states. Furthermore, the binding problem\u2014how disparate neural processes create unified conscious experience\u2014remains contested, with some neuroscientists proposing that oscillatory synchronization across cortical regions facilitates integration, while philosophers argue this mechanistic account may be insufficient to explain the qualitative nature of subjective experience."
+      },
+      "solution_criteria": [
+        "Extracts all major topics spanning philosophy (phenomenology, philosophy of mind, binding problem), psychology (sense of self, predictive processing), and neuroscience (neural correlates, neuroimaging, cortical activity, oscillatory synchronization)",
+        "Returns output as a JSON array of strings with clear, distinct topic labels",
+        "Avoids redundancy while capturing both overarching themes and specific technical concepts"
+      ],
+      "task_description": "Extract topics out of a passage of text from a scholarly article into a JSON array of strings",
+      "scenario": "Testing with interdisciplinary passage containing mixed topics from philosophy, psychology, and neuroscience to evaluate accurate topic extraction across multiple fields"
+    },
+    "score": 9,
+    "reasoning": "The solution fully satisfies all mandatory requirements: it is a valid JSON array of strings containing topics from the article with no extra commentary. Regarding secondary criteria, it successfully extracts topics spanning all three disciplines mentioned in the passage and avoids redundancy while capturing both broad themes and specific technical concepts. The inclusion of 'Qualia' is a minor interpretive liberty\u2014while the concept is referenced through 'qualitative nature of subjective experience,' the exact term does not appear in the text. This is a borderline decision that slightly exceeds strict extraction but demonstrates good topical understanding. Overall, the solution is highly effective and meets the stated criteria comprehensively."
+  },
+  {
+    "output": "```json\n[\n  \"Machine Learning\",\n  \"Natural Language Processing\",\n  \"Deep Neural Networks\",\n  \"Transformer-Based Architectures\",\n  \"BERT\",\n  \"GPT\",\n  \"Text Classification\",\n  \"Semantic Analysis\",\n  \"Language Understanding\",\n  \"Machine Translation\",\n  \"Sentiment Analysis\",\n  \"Information Extraction\",\n  \"Computational Linguistics\",\n  \"Linguistic Structure\",\n  \"Grammatical Theory\",\n  \"Symbolic Methods\",\n  \"Linguistic Representations\",\n  \"Statistical Patterns\"\n]\n```",
+    "test_case": {
+      "prompt_inputs": {
+        "content": "Recent advances in machine learning have significantly impacted natural language processing and computational linguistics, particularly through deep neural networks and transformer-based architectures. These neural network models, especially transformer models like BERT and GPT, have revolutionized text classification, semantic analysis, and language understanding tasks. The intersection of deep learning and NLP has enabled breakthrough applications in machine translation, sentiment analysis, and information extraction, though the computational linguistics community continues to debate whether these neural approaches adequately capture linguistic structure and grammatical theory that traditional symbolic methods emphasized. Furthermore, the performance improvements in language understanding tasks have raised questions about whether neural networks truly learn linguistic representations or merely exploit statistical patterns in training data."
+      },
+      "solution_criteria": [
+        "Extracts distinct topics without redundancy (e.g., 'machine learning' and 'deep learning' should not both appear if one subsumes the other in this context)",
+        "Disambiguates overlapping concepts by identifying separate but related topics (e.g., 'neural networks' and 'transformer architectures' as distinct topics)",
+        "Captures all major topics mentioned across the passage",
+        "Avoids overly specific subtopics that would fragment related concepts (e.g., 'BERT' and 'GPT' should be grouped under broader topic rather than listed separately)"
+      ],
+      "task_description": "Extract topics out of a passage of text from a scholarly article into a JSON array of strings",
+      "scenario": "Testing with ambiguous passage where topics overlap significantly to assess whether the prompt can disambiguate related concepts and avoid redundant extractions"
+    },
+    "score": 6,
+    "reasoning": "The solution successfully meets all mandatory requirements by providing a valid JSON array containing only topic strings with no commentary. However, it violates the secondary criterion about avoiding overly specific subtopics that fragment related concepts. The inclusion of 'BERT' and 'GPT' as separate entries directly contradicts the guidance that such specific model names should be grouped under broader topics rather than listed separately. While the solution is comprehensive and captures major topics, the granularity level is inconsistent with the stated criteria about avoiding unnecessary fragmentation of related concepts."
+  },
+  {
+    "output": "```json\n[\n  \"Adaptive Radiation\",\n  \"Morphological Variation\",\n  \"Isotopic Analysis\",\n  \"Dietary Shifts\",\n  \"Skeletal Remains\",\n  \"Sedimentary Context\",\n  \"Environmental Transitions\",\n  \"Phylogenetic Inference\",\n  \"Comparative Anatomy\",\n  \"Evolutionary Framework\",\n  \"Molecular Evidence\",\n  \"Preservation Constraints\"\n]\n```",
+    "test_case": {
+      "prompt_inputs": {
+        "content": "The specimens exhibited morphological variations consistent with adaptive radiation patterns. Isotopic analysis of skeletal remains suggested dietary shifts across the temporal sequence, while sedimentary context indicated environmental transitions. Phylogenetic inference based on comparative anatomy positioned these organisms within a broader evolutionary framework, though direct molecular evidence remained unavailable due to preservation constraints."
+      },
+      "solution_criteria": [
+        "Identifies implicit topics inferable from context clues (e.g., evolution, paleontology, environmental change) despite absence of explicit topic markers",
+        "Extracts topics in valid JSON array of strings format",
+        "Captures at least 4 distinct topics from the passage"
+      ],
+      "task_description": "Extract topics out of a passage of text from a scholarly article into a JSON array of strings",
+      "scenario": "Testing with sparse passage containing minimal explicit topic markers to evaluate the prompt's ability to infer and identify implicit topics from context clues alone"
+    },
+    "score": 9,
+    "reasoning": "The solution fully satisfies all mandatory requirements: it provides a valid JSON array of strings with only topic names and no commentary, contains each topic mentioned in the passage, and includes nothing else. It exceeds the secondary criteria by identifying 12 topics (well above the 4-topic minimum) and successfully infers implicit topics from context clues (e.g., 'Evolutionary Framework' captures the evolution theme, 'Comparative Anatomy' and 'Skeletal Remains' indicate paleontology). While some extracted items are more granular descriptive elements than primary research topics, they are all legitimately inferable from the passage and represent distinct concepts. The extraction is comprehensive and contextually appropriate."
+  }
+]
