@@ -1,0 +1,86 @@
+[
+  {
+    "output": "\n[\"universal basic income\", \"labor economics\", \"social welfare systems\", \"macroeconomic stability\", \"income inequality\", \"Gini coefficients\", \"labor force participation\", \"inflationary pressures\", \"aggregate demand\", \"fiscal sustainability\", \"progressive taxation\", \"human capital investment\", \"low-income populations\", \"political economy\", \"public support\", \"income quintiles\", \"redistributive policy\", \"welfare state reform\", \"democratic legitimacy\"]\n",
+    "test_case": {
+      "prompt_inputs": {
+        "content": "The implementation of universal basic income (UBI) policies has emerged as a critical intersection between labor economics, social welfare systems, and macroeconomic stability. Recent empirical studies from Nordic countries demonstrate that modest UBI schemes reduce income inequality measured by Gini coefficients while maintaining labor force participation rates above 85%. However, policymakers face competing concerns: inflationary pressures from increased aggregate demand, the fiscal sustainability of funding mechanisms through progressive taxation, and behavioral responses in human capital investment among low-income populations. Additionally, the political economy of UBI adoption reveals significant disparities in public support across income quintiles, with implications for redistributive policy design and democratic legitimacy in welfare state reform."
+      },
+      "solution_criteria": [
+        "Extracts all major topics spanning economics, social policy, and political dimensions without omissions",
+        "Returns output as a valid JSON array of strings with appropriate granularity (neither overly broad nor fragmented)"
+      ],
+      "task_description": "Extract topics out of a passage of text from a scholarly article into a JSON array of strings.",
+      "scenario": "Testing with interdisciplinary content mixing social science, economics, and policy topics to verify accurate topic extraction across multiple domains"
+    },
+    "score": 9,
+    "reasoning": "The solution meets all mandatory requirements: it is a valid JSON array of strings, contains only topic names without commentary, and includes each major topic mentioned in the source material. The extraction spans economics (labor economics, macroeconomic stability, aggregate demand), social policy (social welfare systems, redistributive policy, welfare state reform), and political dimensions (political economy, public support, democratic legitimacy). The granularity is appropriate throughout. While two minor topics could arguably have been included (Nordic countries as geographic context and empirical studies as methodology), their omission does not constitute a failure to extract 'all major topics' as the criteria requires - these are secondary contextual elements rather than primary topics. The solution fully satisfies both mandatory and secondary criteria."
+  },
+  {
+    "output": "\n[\"socioeconomic disparities\", \"disease outcomes\", \"urban populations\", \"healthcare accessibility\", \"transportation barriers\", \"delayed diagnoses\", \"chronic stress\", \"financial instability\", \"immune responses\", \"nutritional deficiencies\", \"food insecurity\", \"inflammatory markers\", \"economic inequality\", \"geographic isolation\", \"psychological stress\", \"malnutrition\", \"mortality rates\", \"systemic inequities\", \"biological vulnerability\"]\n",
+    "test_case": {
+      "prompt_inputs": {
+        "content": "The study examined how socioeconomic disparities influence disease outcomes in urban populations. Patients from lower-income neighborhoods experienced delayed diagnoses, partly due to reduced healthcare facility accessibility and transportation barriers. Additionally, the research revealed that chronic stress from financial instability correlates with weakened immune responses, while nutritional deficiencies common in food-insecure communities exacerbate inflammatory markers. These interconnected factors\u2014economic inequality, geographic isolation, psychological stress, and malnutrition\u2014collectively contribute to a 40% higher mortality rate among disadvantaged groups, highlighting how systemic inequities manifest as biological vulnerability."
+      },
+      "solution_criteria": [
+        "Captures both explicit topics (healthcare accessibility, transportation barriers, nutritional deficiencies) and implicit/embedded topics (systemic inequities, socioeconomic disparities as a root cause, stress-immune system connection)",
+        "Demonstrates semantic understanding by recognizing that concepts like 'financial instability,' 'food-insecurity,' and 'lower-income neighborhoods' represent the broader topic of economic inequality",
+        "Returns results as a JSON array of strings"
+      ],
+      "task_description": "Extract topics out of a passage of text from a scholarly article into a JSON array of strings.",
+      "scenario": "Testing with a passage containing implicit or embedded topics that require semantic understanding rather than just keyword matching"
+    },
+    "score": 9,
+    "reasoning": "The solution meets all mandatory requirements: it is a valid JSON array of strings containing topics from the article with no extra commentary. It successfully captures both explicit topics (healthcare accessibility, transportation barriers, nutritional deficiencies, delayed diagnoses) and implicit/embedded concepts (systemic inequities, biological vulnerability, stress-immune system connection). The solution demonstrates strong semantic understanding by recognizing that 'financial instability' and 'food insecurity' relate to the broader concept of 'economic inequality.' The extraction is comprehensive and well-organized. Minor areas for improvement include potential consolidation of closely related concepts and ensuring all explicitly mentioned topics are included, but these do not violate mandatory requirements."
+  },
+  {
+    "output": "\n[\"quantum entanglement\", \"electron spins\", \"topological insulators\", \"band structures\", \"spintronics\", \"angle-resolved photoemission spectroscopy\", \"Dirac fermions\", \"surface states\", \"Bi\u2082Se\u2083\", \"energy-momentum dispersion relations\", \"massless quasiparticles\", \"spin-orbit coupling\", \"electron-phonon interactions\", \"topological protection\", \"backscattering suppression\", \"quantum transport\", \"topological quantum computing\", \"dissipationless edge channels\"]\n",
+    "test_case": {
+      "prompt_inputs": {
+        "content": "The quantum entanglement of electron spins in topological insulators has emerged as a critical mechanism for understanding non-trivial band structures and their implications for spintronics applications. Recent studies employing angle-resolved photoemission spectroscopy (ARPES) have revealed Dirac fermions at the surface states of Bi\u2082Se\u2083, exhibiting linear energy-momentum dispersion relations characteristic of massless quasiparticles. Furthermore, the interplay between spin-orbit coupling and electron-phonon interactions in these materials demonstrates how topological protection suppresses backscattering, thereby enabling robust quantum transport phenomena with potential applications in topological quantum computing and dissipationless edge channels."
+      },
+      "solution_criteria": [
+        "Accurately identifies domain-specific technical terms (e.g., topological insulators, ARPES, Dirac fermions, spin-orbit coupling)",
+        "Extracts both primary concepts and related specialized phenomena as distinct topics",
+        "Includes application areas mentioned (spintronics, quantum computing, quantum transport)"
+      ],
+      "task_description": "Extract topics out of a passage of text from a scholarly article into a JSON array of strings.",
+      "scenario": "Testing with highly technical single-domain text (e.g., quantum physics or molecular biology) with specialized terminology to assess handling of domain-specific jargon"
+    },
+    "score": 9,
+    "reasoning": "The solution meets all mandatory requirements: it is a valid JSON array of strings containing topics from the article with no extra commentary. It successfully identifies 18 domain-specific technical terms and concepts across primary physics concepts, specialized phenomena, and application areas. The extraction is accurate and comprehensive, covering the full scope of the technical content. The only minor issue is the slight paraphrasing of one term, which does not violate requirements but represents a minor deviation from exact source language."
+  },
+  {
+    "output": "\n[\"machine learning\", \"natural language processing\", \"transformer architectures\", \"deep learning models\", \"neural networks\", \"machine translation\", \"sentiment analysis\", \"question answering systems\", \"attention mechanisms\", \"recurrent neural networks\", \"sequential data processing\", \"transfer learning\", \"pre-trained language models\", \"fine-tuning\", \"NLP tasks\", \"computational efficiency\"]\n",
+    "test_case": {
+      "prompt_inputs": {
+        "content": "Recent advances in machine learning have significantly impacted natural language processing, particularly through the development of transformer architectures and deep learning models. Neural networks, especially those based on transformer technology, have become foundational to modern NLP applications including machine translation, sentiment analysis, and question answering systems. The transformer architecture itself, introduced to address limitations in recurrent neural networks, relies on attention mechanisms that allow models to process sequential data more efficiently. Furthermore, the application of transfer learning\u2014where pre-trained language models are fine-tuned for specific NLP tasks\u2014has democratized access to state-of-the-art performance, reducing the computational burden on individual researchers working with deep learning approaches."
+      },
+      "solution_criteria": [
+        "Extracts distinct topics without excessive duplication (e.g., 'machine learning' and 'deep learning' are separate, but 'transformer architecture' and 'transformers' are not duplicated)",
+        "Distinguishes between broader concepts (machine learning, NLP) and specific techniques (attention mechanisms, transfer learning)",
+        "Avoids listing redundant parent-child relationships (e.g., does not include both 'neural networks' and 'transformer-based neural networks' as separate topics)"
+      ],
+      "task_description": "Extract topics out of a passage of text from a scholarly article into a JSON array of strings.",
+      "scenario": "Testing with a passage containing overlapping or nested topics to verify the prompt distinguishes between related concepts and avoids excessive duplication"
+    },
+    "score": 7,
+    "reasoning": "The solution meets all mandatory requirements: it is a valid JSON array of strings with only topic names and no commentary. Regarding secondary criteria, the solution performs well in distinguishing broader concepts from specific techniques and avoids most duplication. However, there are minor issues with topic selection\u2014'recurrent neural networks' is mentioned as a limitation rather than a primary topic, and 'sequential data processing' is somewhat of an interpretation rather than a direct extraction. The inclusion of both 'neural networks' and 'transformer architectures' creates slight redundancy, though they are distinct enough to justify separate entries. Overall, the solution is strong but has minor deficiencies in precision."
+  },
+  {
+    "output": "\n[\"protein folding\", \"protein folding mechanisms\", \"cellular environments\", \"molecular dynamics simulations\", \"temperature effects\", \"structural transitions\", \"hydrophobic interactions\", \"conformational states\", \"neurodegenerative diseases\", \"disease progression\"]\n",
+    "test_case": {
+      "prompt_inputs": {
+        "content": "The study examined protein folding mechanisms in cellular environments. Molecular dynamics simulations were conducted at varying temperatures to observe structural transitions. Results indicated that hydrophobic interactions played a significant role in determining final conformational states, with implications for understanding neurodegenerative disease progression."
+      },
+      "solution_criteria": [
+        "Extracts all major topics that can be reasonably inferred from the passage",
+        "Returns results as a JSON array of strings",
+        "Topics are relevant to the scholarly content despite sparse explicit topical markers"
+      ],
+      "task_description": "Extract topics out of a passage of text from a scholarly article into a JSON array of strings.",
+      "scenario": "Testing with a short, sparse passage with minimal explicit topical markers to evaluate whether the prompt can infer relevant topics from limited contextual information"
+    },
+    "score": 8,
+    "reasoning": "The solution meets all mandatory requirements: it is a valid JSON array of strings containing topics from the article with no extra commentary. The extracted topics are highly relevant and cover the scholarly content comprehensively. However, there are minor gaps in topic extraction. 'Temperature effects' is included but 'temperature' alone is not, which is a slight inconsistency. The passage explicitly mentions 'varying temperatures' as a key experimental variable, so this could have been extracted more directly. Additionally, broader inferred topics like the methodological domain could strengthen coverage. These are minor deficiencies that don't violate mandatory requirements but represent incomplete secondary criterion fulfillment."
+  }
+]

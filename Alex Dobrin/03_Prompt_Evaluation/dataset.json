@@ -1,0 +1,61 @@
+[
+  {
+    "prompt_inputs": {
+      "content": "The quantum entanglement of electron spins in topological insulators has emerged as a critical mechanism for understanding non-trivial band structures and their implications for spintronics applications. Recent studies employing angle-resolved photoemission spectroscopy (ARPES) have revealed Dirac fermions at the surface states of Bi\u2082Se\u2083, exhibiting linear energy-momentum dispersion relations characteristic of massless quasiparticles. Furthermore, the interplay between spin-orbit coupling and electron-phonon interactions in these materials demonstrates how topological protection suppresses backscattering, thereby enabling robust quantum transport phenomena with potential applications in topological quantum computing and dissipationless edge channels."
+    },
+    "solution_criteria": [
+      "Accurately identifies domain-specific technical terms (e.g., topological insulators, ARPES, Dirac fermions, spin-orbit coupling)",
+      "Extracts both primary concepts and related specialized phenomena as distinct topics",
+      "Includes application areas mentioned (spintronics, quantum computing, quantum transport)"
+    ],
+    "task_description": "Extract topics out of a passage of text from a scholarly article into a JSON array of strings.",
+    "scenario": "Testing with highly technical single-domain text (e.g., quantum physics or molecular biology) with specialized terminology to assess handling of domain-specific jargon"
+  },
+  {
+    "prompt_inputs": {
+      "content": "The implementation of universal basic income (UBI) policies has emerged as a critical intersection between labor economics, social welfare systems, and macroeconomic stability. Recent empirical studies from Nordic countries demonstrate that modest UBI schemes reduce income inequality measured by Gini coefficients while maintaining labor force participation rates above 85%. However, policymakers face competing concerns: inflationary pressures from increased aggregate demand, the fiscal sustainability of funding mechanisms through progressive taxation, and behavioral responses in human capital investment among low-income populations. Additionally, the political economy of UBI adoption reveals significant disparities in public support across income quintiles, with implications for redistributive policy design and democratic legitimacy in welfare state reform."
+    },
+    "solution_criteria": [
+      "Extracts all major topics spanning economics, social policy, and political dimensions without omissions",
+      "Returns output as a valid JSON array of strings with appropriate granularity (neither overly broad nor fragmented)"
+    ],
+    "task_description": "Extract topics out of a passage of text from a scholarly article into a JSON array of strings.",
+    "scenario": "Testing with interdisciplinary content mixing social science, economics, and policy topics to verify accurate topic extraction across multiple domains"
+  },
+  {
+    "prompt_inputs": {
+      "content": "The study examined how socioeconomic disparities influence disease outcomes in urban populations. Patients from lower-income neighborhoods experienced delayed diagnoses, partly due to reduced healthcare facility accessibility and transportation barriers. Additionally, the research revealed that chronic stress from financial instability correlates with weakened immune responses, while nutritional deficiencies common in food-insecure communities exacerbate inflammatory markers. These interconnected factors\u2014economic inequality, geographic isolation, psychological stress, and malnutrition\u2014collectively contribute to a 40% higher mortality rate among disadvantaged groups, highlighting how systemic inequities manifest as biological vulnerability."
+    },
+    "solution_criteria": [
+      "Captures both explicit topics (healthcare accessibility, transportation barriers, nutritional deficiencies) and implicit/embedded topics (systemic inequities, socioeconomic disparities as a root cause, stress-immune system connection)",
+      "Demonstrates semantic understanding by recognizing that concepts like 'financial instability,' 'food-insecurity,' and 'lower-income neighborhoods' represent the broader topic of economic inequality",
+      "Returns results as a JSON array of strings"
+    ],
+    "task_description": "Extract topics out of a passage of text from a scholarly article into a JSON array of strings.",
+    "scenario": "Testing with a passage containing implicit or embedded topics that require semantic understanding rather than just keyword matching"
+  },
+  {
+    "prompt_inputs": {
+      "content": "The study examined protein folding mechanisms in cellular environments. Molecular dynamics simulations were conducted at varying temperatures to observe structural transitions. Results indicated that hydrophobic interactions played a significant role in determining final conformational states, with implications for understanding neurodegenerative disease progression."
+    },
+    "solution_criteria": [
+      "Extracts all major topics that can be reasonably inferred from the passage",
+      "Returns results as a JSON array of strings",
+      "Topics are relevant to the scholarly content despite sparse explicit topical markers"
+    ],
+    "task_description": "Extract topics out of a passage of text from a scholarly article into a JSON array of strings.",
+    "scenario": "Testing with a short, sparse passage with minimal explicit topical markers to evaluate whether the prompt can infer relevant topics from limited contextual information"
+  },
+  {
+    "prompt_inputs": {
+      "content": "Recent advances in machine learning have significantly impacted natural language processing, particularly through the development of transformer architectures and deep learning models. Neural networks, especially those based on transformer technology, have become foundational to modern NLP applications including machine translation, sentiment analysis, and question answering systems. The transformer architecture itself, introduced to address limitations in recurrent neural networks, relies on attention mechanisms that allow models to process sequential data more efficiently. Furthermore, the application of transfer learning\u2014where pre-trained language models are fine-tuned for specific NLP tasks\u2014has democratized access to state-of-the-art performance, reducing the computational burden on individual researchers working with deep learning approaches."
+    },
+    "solution_criteria": [
+      "Extracts distinct topics without excessive duplication (e.g., 'machine learning' and 'deep learning' are separate, but 'transformer architecture' and 'transformers' are not duplicated)",
+      "Distinguishes between broader concepts (machine learning, NLP) and specific techniques (attention mechanisms, transfer learning)",
+      "Avoids listing redundant parent-child relationships (e.g., does not include both 'neural networks' and 'transformer-based neural networks' as separate topics)"
+    ],
+    "task_description": "Extract topics out of a passage of text from a scholarly article into a JSON array of strings.",
+    "scenario": "Testing with a passage containing overlapping or nested topics to verify the prompt distinguishes between related concepts and avoids excessive duplication"
+  }
+]
