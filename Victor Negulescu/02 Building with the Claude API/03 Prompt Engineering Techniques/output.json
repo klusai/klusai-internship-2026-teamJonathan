@@ -1,0 +1,55 @@
+[
+  {
+    "output": "```json\n[\n  \"Machine learning\",\n  \"Natural language processing\",\n  \"Transformer-based neural networks\",\n  \"Deep learning\",\n  \"Attention mechanisms\",\n  \"Machine translation\",\n  \"Sentiment analysis\",\n  \"Information extraction\",\n  \"Recurrent neural networks\",\n  \"Computational complexity\",\n  \"Scalability\",\n  \"Environmental impact\",\n  \"Model interpretability\",\n  \"Neural network transparency\",\n  \"Clinical decision support\",\n  \"Legal document analysis\",\n  \"Regulatory compliance\"\n]\n```",
+    "test_case": {
+      "prompt_inputs": {
+        "content": "Recent advances in machine learning have revolutionized natural language processing, particularly through the development of transformer-based neural networks. These deep learning architectures employ attention mechanisms to process sequential data, enabling applications in machine translation, sentiment analysis, and information extraction. While transformer models demonstrate superior performance in natural language understanding tasks compared to recurrent neural networks, their computational complexity raises concerns about scalability and environmental impact. Furthermore, the intersection of machine learning interpretability and neural network transparency remains critical for deploying these language models in high-stakes domains such as clinical decision support and legal document analysis, where understanding model reasoning is essential for regulatory compliance."
+      },
+      "solution_criteria": [
+        "Extracts main topics without excessive granularity (e.g., 'transformer-based neural networks' rather than separate entries for 'transformers', 'neural networks', and 'architectures')",
+        "Avoids redundant entries where concepts are nested or overlapping (e.g., does not list both 'machine learning' and 'deep learning' as separate topics if one encompasses the other)",
+        "Includes all distinct scholarly domains and concepts mentioned (e.g., applications, computational concerns, and interpretability challenges)",
+        "Returns output as a valid JSON array of strings"
+      ],
+      "task_description": "\"\n    \"Extract topics out of a passage of text from a scholarly article into a JSON array of strings\"\n    ",
+      "scenario": "Testing with a passage containing overlapping and nested topics to verify the prompt correctly disambiguates related concepts and avoids redundant or overly granular extractions"
+    },
+    "score": 6,
+    "reasoning": "The solution meets all mandatory requirements: it is a valid JSON array of strings containing topics without extra commentary. However, it has notable deficiencies in the secondary criteria regarding redundancy. The inclusion of both 'Machine learning' and 'Deep learning' as separate entries directly violates the stated criterion that avoids listing concepts where one encompasses the other. Similarly, 'Model interpretability' and 'Neural network transparency' are overlapping concepts that should ideally be consolidated. The solution demonstrates good granularity in most cases but fails to fully apply the redundancy-avoidance principle consistently."
+  },
+  {
+    "output": "```json\n[\n  \"machine learning\",\n  \"convolutional neural networks\",\n  \"transformer architectures\",\n  \"temporal pattern analysis\",\n  \"genomic data\",\n  \"CRISPR-Cas9 gene editing\",\n  \"RNA-sequencing\",\n  \"gene expression\",\n  \"batch effect normalization\",\n  \"principal component analysis\",\n  \"statistical hypothesis testing\",\n  \"false discovery rate correction\",\n  \"biomarkers\",\n  \"deep learning\",\n  \"logistic regression\",\n  \"attention mechanism\",\n  \"classification accuracy\",\n  \"feature importance\",\n  \"tissue samples\",\n  \"validation cohorts\"\n]\n```",
+    "test_case": {
+      "prompt_inputs": {
+        "content": "This study employs a novel machine learning framework integrating convolutional neural networks (CNNs) with transformer architectures to analyze temporal patterns in high-dimensional genomic data. We utilized CRISPR-Cas9 gene editing techniques combined with RNA-sequencing to identify differential gene expression profiles across three distinct cell populations. Our methodology incorporates batch effect normalization, principal component analysis (PCA), and statistical hypothesis testing via false discovery rate (FDR) correction. Results demonstrate a 94% classification accuracy in distinguishing diseased from healthy tissue samples, with identified biomarkers showing significant predictive power in independent validation cohorts. These findings suggest that the integrated deep learning approach outperforms traditional logistic regression models by 23% and provides interpretable feature importance rankings through attention mechanism visualization."
+      },
+      "solution_criteria": [
+        "Extracts all major technical methodologies (e.g., CNNs, transformers, CRISPR-Cas9, RNA-sequencing, PCA, FDR correction)",
+        "Includes domain-specific terminology and analytical techniques relevant to the research",
+        "Identifies result-focused topics and performance metrics (e.g., classification accuracy, biomarkers, validation)",
+        "Returns output as a valid JSON array of strings with no duplicates"
+      ],
+      "task_description": "\"\n    \"Extract topics out of a passage of text from a scholarly article into a JSON array of strings\"\n    ",
+      "scenario": "Testing with a dense scientific abstract containing domain-specific terminology, methodology topics, and result-focused topics to ensure proper identification of technical concepts"
+    },
+    "score": 8,
+    "reasoning": "The solution fully satisfies all mandatory requirements: it is a valid JSON array of strings with only topic names, no duplicates, and no extra commentary. It successfully extracts the major technical methodologies and includes performance metrics as required by the secondary criteria. However, there are minor gaps in comprehensiveness - notably the absence of 'differential gene expression' which is a central analytical concept in the passage. The inclusion of 'temporal pattern analysis' as a single topic is slightly interpretive. Overall, the solution demonstrates strong understanding of the task and captures the essential topics, with only minor omissions that prevent a perfect score."
+  },
+  {
+    "output": "```json\n[\n  \"Enlightenment\",\n  \"Medieval scholasticism\",\n  \"Western intellectual tradition\",\n  \"Empirical observation\",\n  \"Rational skepticism\",\n  \"Ecclesiastical authority\",\n  \"Epistemology\",\n  \"Novel form\",\n  \"Individual consciousness\",\n  \"Moral ambiguity\",\n  \"Philosophy\",\n  \"Historical methodology\",\n  \"Teleological narratives\",\n  \"Progress\",\n  \"Renaissance historiography\",\n  \"Power structures\",\n  \"Cultural contingency\",\n  \"Historical knowledge\",\n  \"Subject and representation\",\n  \"Modernity\"\n]\n```",
+    "test_case": {
+      "prompt_inputs": {
+        "content": "The Enlightenment's challenge to medieval scholasticism fundamentally reshaped Western intellectual tradition, as philosophers like Descartes and Locke privileged empirical observation and rational skepticism over inherited ecclesiastical authority. This epistemological rupture manifested across literature through the emergence of the novel form, where authors such as Richardson and Defoe explored individual consciousness and moral ambiguity in ways previously confined to philosophical treatises. Simultaneously, historians began interrogating the teleological narratives of progress that had dominated Renaissance historiography, recognizing how power structures and cultural contingency shaped the very documents upon which historical knowledge depended. These intersecting developments in philosophy, literary form, and historical methodology collectively articulated a new relationship between the subject, knowledge, and representation that would define modernity itself."
+      },
+      "solution_criteria": [
+        "Extracts all major conceptual and thematic topics across philosophy, literature, and history mentioned in the passage",
+        "Returns output as a valid JSON array of strings",
+        "Captures both explicit topics (Enlightenment, empiricism, the novel) and implicit interdisciplinary themes (epistemology, individual consciousness, historiography)"
+      ],
+      "task_description": "\"\n    \"Extract topics out of a passage of text from a scholarly article into a JSON array of strings\"\n    ",
+      "scenario": "Testing with a humanities passage containing interdisciplinary topics (philosophy, history, literature) to verify accurate extraction of abstract and conceptual themes"
+    },
+    "score": 9,
+    "reasoning": "The solution fully satisfies all mandatory requirements: it is a valid JSON array containing only strings with topics, no extra commentary, and nothing else in the response. It meets the secondary criteria by extracting major conceptual themes across the three disciplines mentioned (philosophy, literature, history) and capturing both explicit topics like 'Enlightenment' and implicit themes like 'Epistemology' and 'Historiography'. The 20 topics extracted represent a thorough and well-balanced interpretation of the passage's content. While there are minor quibbles about granularity and naming consistency, these do not constitute significant deficiencies against the stated criteria."
+  }
+]
