@@ -1,0 +1,17 @@
+{
+  "_comment": "Gold for ex4. reciprocal_rank_fusion is graded by RRF_CASES (the truth table in hybrid.py, mirrored here). The recall table is produced by fusing the precomputed rankings in fixtures/candidate_rankings.json. The headline: fused recall@1 (7/7) beats BOTH single methods.",
+  "rrf_cases": [
+    {"rankings": [["doc2", "doc7", "doc6"], ["doc6", "doc2", "doc7"]], "expected": ["doc2", "doc6", "doc7"]},
+    {"rankings": [["a", "b", "c"], ["a", "b", "c"]], "expected": ["a", "b", "c"]},
+    {"rankings": [["a", "b", "c"], ["b", "c", "a"]], "expected": ["b", "a", "c"]}
+  ],
+  "recall": {
+    "bm25_only":   {"@1": "5/7", "@2": "6/7", "@3": "6/7"},
+    "semantic_only": {"@1": "6/7", "@2": "6/7", "@3": "7/7"},
+    "hybrid_rrf":  {"@1": "7/7", "@2": "7/7", "@3": "7/7"}
+  },
+  "complementarity": {
+    "rare_term_owned_by_bm25": {"query_id": 3, "gold": "research-and-development"},
+    "paraphrase_owned_by_semantic": {"query_id": 4, "gold": "people-and-culture"}
+  }
+}
