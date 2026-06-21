@@ -1,0 +1,25 @@
+{
+  "_comment": "Gold labels for ex5 tickets.json. 'debatable: true' marks tickets where a reasonable grader could accept a second label — do NOT count these against a student. Tickets 8, 13, 19 are the debatable ones.",
+  "labels": [
+    {"id": 1,  "label": "bug",      "debatable": false, "rationale": "Reproducible crash with a stack trace."},
+    {"id": 2,  "label": "feature",  "debatable": false, "rationale": "Net-new capability request."},
+    {"id": 3,  "label": "question", "debatable": false, "rationale": "How-to; no defect or request."},
+    {"id": 4,  "label": "bug",      "debatable": false, "rationale": "Regression after a deploy; 500 error."},
+    {"id": 5,  "label": "feature",  "debatable": false, "rationale": "New filtering capability."},
+    {"id": 6,  "label": "question", "debatable": false, "rationale": "Plan comparison; informational."},
+    {"id": 7,  "label": "bug",      "debatable": false, "rationale": "Silent failure on a supported action."},
+    {"id": 8,  "label": "feature",  "debatable": true,  "rationale": "Frames a perf complaint (sounds like a bug) as a specific feature request ('add Elasticsearch'). Accept either 'feature' or 'bug'."},
+    {"id": 9,  "label": "question", "debatable": false, "rationale": "Asks whether a limit exists."},
+    {"id": 10, "label": "bug",      "debatable": false, "rationale": "Double-submit creates duplicates; defect."},
+    {"id": 11, "label": "feature",  "debatable": false, "rationale": "Add a new export format."},
+    {"id": 12, "label": "question", "debatable": false, "rationale": "Billing inquiry; phrased as a question. (If it turns out to be a real double-charge, it becomes a bug — but as written it's a question.)"},
+    {"id": 13, "label": "feature",  "debatable": true,  "rationale": "UX feedback with no concrete defect. Reasonable to log as a usability 'feature/improvement' or to route as 'question' for follow-up. Accept either."},
+    {"id": 14, "label": "bug",      "debatable": false, "rationale": "Delayed 2FA delivery; defect."},
+    {"id": 15, "label": "question", "debatable": false, "rationale": "Asks about discount availability."},
+    {"id": 16, "label": "feature",  "debatable": false, "rationale": "Add keyboard shortcuts."},
+    {"id": 17, "label": "bug",      "debatable": false, "rationale": "Layout defect on small screens."},
+    {"id": 18, "label": "question", "debatable": false, "rationale": "Asks what export includes."},
+    {"id": 19, "label": "bug",      "debatable": true,  "rationale": "User unsure; 'totals look off after a coupon' most likely a calculation bug, but as worded it could be a question seeking clarification. Accept 'bug' or 'question'."},
+    {"id": 20, "label": "feature",  "debatable": false, "rationale": "Add a Slack integration."}
+  ]
+}
