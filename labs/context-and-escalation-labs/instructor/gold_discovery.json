@@ -1,9 +1,0 @@
-{
-  "_comment": "Gold for ex6 task3. The scout should report the LIVE retry limit, not the legacy decoy. Correct answer requires tracing client/http.py -> config/settings.py.",
-  "value": 5,
-  "symbol": "MAX_RETRIES",
-  "defined_in": "repo/config/settings.py",
-  "defined_near_line": 18,
-  "read_by": "repo/client/http.py",
-  "decoy": {"file": "repo/legacy/old_client.py", "value": 3, "why_wrong": "legacy client, nothing imports it; superseded by config.settings.MAX_RETRIES"}
-}

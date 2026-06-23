@@ -1,6 +1,0 @@
-{
-  "_comment": "Gold for ex3 (BM25, K1=1.5, B=0.75, section chunks). recall@k over the 7 clean queries using the answer_contains oracle. Q4 (paraphrase 'keep employees from leaving' -> 'attrition') is the one BM25 buries (gold at rank 4) — that's the motivation for semantic search.",
-  "recall": {"@1": "5/7", "@2": "6/7", "@3": "6/7"},
-  "rare_term_spotlight": {"query_id": 3, "answer": "Halibut", "rank1_section": "research-and-development", "nailed": true},
-  "bm25_misses": {"query_id": 4, "gold_section": "people-and-culture", "bm25_rank": 4, "why": "no shared rare terms with the section text"}
-}
