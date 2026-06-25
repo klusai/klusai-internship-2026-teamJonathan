@@ -1,0 +1,239 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Prompt Evaluation Report</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                margin: 0;
+                padding: 20px;
+                color: #333;
+            }
+            .header {
+                background-color: #f0f0f0;
+                padding: 20px;
+                border-radius: 5px;
+                margin-bottom: 20px;
+            }
+            .summary-stats {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .stat-box {
+                background-color: #fff;
+                border-radius: 5px;
+                padding: 15px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                flex-basis: 30%;
+                min-width: 200px;
+            }
+            .stat-value {
+                font-size: 24px;
+                font-weight: bold;
+                margin-top: 5px;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+            th {
+                background-color: #4a4a4a;
+                color: white;
+                text-align: left;
+                padding: 12px;
+            }
+            td {
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+                vertical-align: top;
+            }
+            tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+            .output-cell {
+                white-space: pre-wrap;
+            }
+            .score {
+                font-weight: bold;
+                padding: 5px 10px;
+                border-radius: 3px;
+                display: inline-block;
+            }
+            .score-high {
+                background-color: #c8e6c9;
+                color: #2e7d32;
+            }
+            .score-medium {
+                background-color: #fff9c4;
+                color: #f57f17;
+            }
+            .score-low {
+                background-color: #ffcdd2;
+                color: #c62828;
+            }
+            .output {
+                overflow: auto;
+                white-space: pre-wrap;
+            }
+
+            .output pre {
+                background-color: #f5f5f5;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                padding: 10px;
+                margin: 0;
+                font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+                font-size: 14px;
+                line-height: 1.4;
+                color: #333;
+                box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+                overflow-x: auto;
+                white-space: pre-wrap; 
+                word-wrap: break-word; 
+            }
+
+            td {
+                width: 20%;
+            }
+            .score-col {
+                width: 80px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Prompt Evaluation Report</h1>
+            <div class="summary-stats">
+                <div class="stat-box">
+                    <div>Total Test Cases</div>
+                    <div class="stat-value">3</div>
+                </div>
+                <div class="stat-box">
+                    <div>Average Score</div>
+                    <div class="stat-value">7.7 / 10</div>
+                </div>
+                <div class="stat-box">
+                    <div>Pass Rate (≥7)</div>
+                    <div class="stat-value">66.7%</div>
+                </div>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Scenario</th>
+                    <th>Prompt Inputs</th>
+                    <th>Solution Criteria</th>
+                    <th>Output</th>
+                    <th>Score</th>
+                    <th>Reasoning</th>
+                </tr>
+            </thead>
+            <tbody>
+    
+            <tr>
+                <td>Testing with a passage containing overlapping and nested topics to verify the prompt correctly disambiguates related concepts and avoids redundant or overly granular extractions</td>
+                <td class="prompt-inputs"><strong>content:</strong> Recent advances in machine learning have revolutionized natural language processing, particularly through the development of transformer-based neural networks. These deep learning architectures employ attention mechanisms to process sequential data, enabling applications in machine translation, sentiment analysis, and information extraction. While transformer models demonstrate superior performance in natural language understanding tasks compared to recurrent neural networks, their computational complexity raises concerns about scalability and environmental impact. Furthermore, the intersection of machine learning interpretability and neural network transparency remains critical for deploying these language models in high-stakes domains such as clinical decision support and legal document analysis, where understanding model reasoning is essential for regulatory compliance.</td>
+                <td class="criteria">• Extracts main topics without excessive granularity (e.g., 'transformer-based neural networks' rather than separate entries for 'transformers', 'neural networks', and 'architectures')<br>• Avoids redundant entries where concepts are nested or overlapping (e.g., does not list both 'machine learning' and 'deep learning' as separate topics if one encompasses the other)<br>• Includes all distinct scholarly domains and concepts mentioned (e.g., applications, computational concerns, and interpretability challenges)<br>• Returns output as a valid JSON array of strings</td>
+                <td class="output"><pre>```json
+[
+  "Machine learning",
+  "Natural language processing",
+  "Transformer-based neural networks",
+  "Deep learning",
+  "Attention mechanisms",
+  "Machine translation",
+  "Sentiment analysis",
+  "Information extraction",
+  "Recurrent neural networks",
+  "Computational complexity",
+  "Scalability",
+  "Environmental impact",
+  "Model interpretability",
+  "Neural network transparency",
+  "Clinical decision support",
+  "Legal document analysis",
+  "Regulatory compliance"
+]
+```</pre></td>
+                <td class="score-col"><span class="score score-medium">6</span></td>
+                <td class="reasoning">The solution meets all mandatory requirements: it is a valid JSON array of strings containing topics without extra commentary. However, it has notable deficiencies in the secondary criteria regarding redundancy. The inclusion of both 'Machine learning' and 'Deep learning' as separate entries directly violates the stated criterion that avoids listing concepts where one encompasses the other. Similarly, 'Model interpretability' and 'Neural network transparency' are overlapping concepts that should ideally be consolidated. The solution demonstrates good granularity in most cases but fails to fully apply the redundancy-avoidance principle consistently.</td>
+            </tr>
+        
+            <tr>
+                <td>Testing with a dense scientific abstract containing domain-specific terminology, methodology topics, and result-focused topics to ensure proper identification of technical concepts</td>
+                <td class="prompt-inputs"><strong>content:</strong> This study employs a novel machine learning framework integrating convolutional neural networks (CNNs) with transformer architectures to analyze temporal patterns in high-dimensional genomic data. We utilized CRISPR-Cas9 gene editing techniques combined with RNA-sequencing to identify differential gene expression profiles across three distinct cell populations. Our methodology incorporates batch effect normalization, principal component analysis (PCA), and statistical hypothesis testing via false discovery rate (FDR) correction. Results demonstrate a 94% classification accuracy in distinguishing diseased from healthy tissue samples, with identified biomarkers showing significant predictive power in independent validation cohorts. These findings suggest that the integrated deep learning approach outperforms traditional logistic regression models by 23% and provides interpretable feature importance rankings through attention mechanism visualization.</td>
+                <td class="criteria">• Extracts all major technical methodologies (e.g., CNNs, transformers, CRISPR-Cas9, RNA-sequencing, PCA, FDR correction)<br>• Includes domain-specific terminology and analytical techniques relevant to the research<br>• Identifies result-focused topics and performance metrics (e.g., classification accuracy, biomarkers, validation)<br>• Returns output as a valid JSON array of strings with no duplicates</td>
+                <td class="output"><pre>```json
+[
+  "machine learning",
+  "convolutional neural networks",
+  "transformer architectures",
+  "temporal pattern analysis",
+  "genomic data",
+  "CRISPR-Cas9 gene editing",
+  "RNA-sequencing",
+  "gene expression",
+  "batch effect normalization",
+  "principal component analysis",
+  "statistical hypothesis testing",
+  "false discovery rate correction",
+  "biomarkers",
+  "deep learning",
+  "logistic regression",
+  "attention mechanism",
+  "classification accuracy",
+  "feature importance",
+  "tissue samples",
+  "validation cohorts"
+]
+```</pre></td>
+                <td class="score-col"><span class="score score-high">8</span></td>
+                <td class="reasoning">The solution fully satisfies all mandatory requirements: it is a valid JSON array of strings with only topic names, no duplicates, and no extra commentary. It successfully extracts the major technical methodologies and includes performance metrics as required by the secondary criteria. However, there are minor gaps in comprehensiveness - notably the absence of 'differential gene expression' which is a central analytical concept in the passage. The inclusion of 'temporal pattern analysis' as a single topic is slightly interpretive. Overall, the solution demonstrates strong understanding of the task and captures the essential topics, with only minor omissions that prevent a perfect score.</td>
+            </tr>
+        
+            <tr>
+                <td>Testing with a humanities passage containing interdisciplinary topics (philosophy, history, literature) to verify accurate extraction of abstract and conceptual themes</td>
+                <td class="prompt-inputs"><strong>content:</strong> The Enlightenment's challenge to medieval scholasticism fundamentally reshaped Western intellectual tradition, as philosophers like Descartes and Locke privileged empirical observation and rational skepticism over inherited ecclesiastical authority. This epistemological rupture manifested across literature through the emergence of the novel form, where authors such as Richardson and Defoe explored individual consciousness and moral ambiguity in ways previously confined to philosophical treatises. Simultaneously, historians began interrogating the teleological narratives of progress that had dominated Renaissance historiography, recognizing how power structures and cultural contingency shaped the very documents upon which historical knowledge depended. These intersecting developments in philosophy, literary form, and historical methodology collectively articulated a new relationship between the subject, knowledge, and representation that would define modernity itself.</td>
+                <td class="criteria">• Extracts all major conceptual and thematic topics across philosophy, literature, and history mentioned in the passage<br>• Returns output as a valid JSON array of strings<br>• Captures both explicit topics (Enlightenment, empiricism, the novel) and implicit interdisciplinary themes (epistemology, individual consciousness, historiography)</td>
+                <td class="output"><pre>```json
+[
+  "Enlightenment",
+  "Medieval scholasticism",
+  "Western intellectual tradition",
+  "Empirical observation",
+  "Rational skepticism",
+  "Ecclesiastical authority",
+  "Epistemology",
+  "Novel form",
+  "Individual consciousness",
+  "Moral ambiguity",
+  "Philosophy",
+  "Historical methodology",
+  "Teleological narratives",
+  "Progress",
+  "Renaissance historiography",
+  "Power structures",
+  "Cultural contingency",
+  "Historical knowledge",
+  "Subject and representation",
+  "Modernity"
+]
+```</pre></td>
+                <td class="score-col"><span class="score score-high">9</span></td>
+                <td class="reasoning">The solution fully satisfies all mandatory requirements: it is a valid JSON array containing only strings with topics, no extra commentary, and nothing else in the response. It meets the secondary criteria by extracting major conceptual themes across the three disciplines mentioned (philosophy, literature, history) and capturing both explicit topics like 'Enlightenment' and implicit themes like 'Epistemology' and 'Historiography'. The 20 topics extracted represent a thorough and well-balanced interpretation of the passage's content. While there are minor quibbles about granularity and naming consistency, these do not constitute significant deficiencies against the stated criteria.</td>
+            </tr>
+        
+            </tbody>
+        </table>
+    </body>
+    </html>
+    

@@ -1,0 +1,16 @@
+{
+  "_comment": "Gold for ex5. These tasks call live models, so grade on the expected behavior, not exact strings.",
+  "rerank": {
+    "candidates": {"8": "cybersecurity", "2": "cybersecurity", "3": "research-and-development"},
+    "before_rank1_correct": 0,
+    "expect_after": "all three (or at least 2/3) gold sections at rank 1 after reranking; after > before"
+  },
+  "contextual": {
+    "naked_chunk_topic": "cybersecurity / security incident",
+    "expect": "the generated context sentence names the security/incident topic (TOPIC_WORDS hit)"
+  },
+  "citations": {
+    "expect_citations_attached": ">= 1",
+    "expect_cache": "cache_creation_input_tokens > 0 on first call; cache_read_input_tokens > 0 on a repeated call in the same window"
+  }
+}
