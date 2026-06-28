@@ -1,0 +1,77 @@
+{
+  "_comment": "12 verbose incident reports to triage one at a time. Each 'body' is deliberately noisy so that accumulating all of them in one conversation would balloon the context. The gold severity for each id lives in instructor/gold_triage.json. Severities: P1 = outage / data loss / security; P2 = degraded or partial, workaround exists; P3 = cosmetic / single user / question.",
+  "records": [
+    {
+      "id": 1,
+      "source": "pagerduty",
+      "received_at": "2026-06-21T08:02:11Z",
+      "body": "[ALERT] checkout-api availability 0% for 6m. host=checkout-7d9 region=us-east-1\nSynthetic probe POST /v1/checkout -> 500 (12/12 last minute). Error budget burn 14x.\nDownstream: orders-api healthy, payments-api healthy. Suspect checkout-api deploy v812 (10m ago).\nCustomer tweets rising. Revenue/min normally ~$4,100; now $0. on-call paged, no ack yet."
+    },
+    {
+      "id": 2,
+      "source": "datadog",
+      "received_at": "2026-06-21T08:14:50Z",
+      "body": "[WARN] login p95 latency 4.1s (baseline 0.6s) for region=eu-west-1 only.\nAffects ~15% of total logins. Logins still SUCCEED, just slow. us regions nominal.\nThread pool saturation on auth-eu-3. Users can retry; no failures recorded. Owner: identity team."
+    },
+    {
+      "id": 3,
+      "source": "support",
+      "received_at": "2026-06-21T09:01:03Z",
+      "body": "Ticket #88210: 'Typo on the pricing page — the footer says \"recieve\" instead of \"receive\".'\nReporter: one visitor via contact form. No functional impact. Marketing owns copy.\nScreenshot attached. Page renders fine otherwise."
+    },
+    {
+      "id": 4,
+      "source": "datadog",
+      "received_at": "2026-06-21T09:20:42Z",
+      "body": "[WARN] read-replica replication lag = 9m12s and climbing (threshold 60s).\nAnalytics dashboards and the admin reporting view are stale by ~9 minutes.\nPrimary DB is healthy; all writes and customer-facing reads (which hit primary) are fine.\nNo customer impact yet; internal reporting only. DBA investigating a long-running backfill."
+    },
+    {
+      "id": 5,
+      "source": "support",
+      "received_at": "2026-06-21T09:46:18Z",
+      "body": "Ticket #88231: customer says the column ORDER in their downloaded PDF invoice differs\nfrom what they see in the web invoice. Values are all correct — just a different order.\nAffects 1 account (enterprise). No data is wrong. Cosmetic mismatch between two templates."
+    },
+    {
+      "id": 6,
+      "source": "security",
+      "received_at": "2026-06-21T10:05:29Z",
+      "body": "[SEV] Plaintext provider API keys found in PUBLIC CI build logs (last 40 builds).\nKeys: STRIPE_SECRET (live), SENDGRID_API_KEY. Logs world-readable on the CI dashboard.\nRotation required immediately; logs must be purged. Possible exposure window: 6 days.\nReported by an external researcher via the disclosure inbox."
+    },
+    {
+      "id": 7,
+      "source": "datadog",
+      "received_at": "2026-06-21T10:31:57Z",
+      "body": "[WARN] payment webhook processing: PayPal handler failing (HTTP 422) for ~30% of orders.\nStripe webhooks unaffected. Orders still place; only the PayPal capture confirmation lags.\nA manual reconciliation job can backfill captures. Partial impact, workaround exists. Payments team notified."
+    },
+    {
+      "id": 8,
+      "source": "support",
+      "received_at": "2026-06-21T11:02:40Z",
+      "body": "Ticket #88255: search returns zero results when the query contains an emoji (e.g. '🌮 recipe').\nPlain-text queries work fine. Rare; one user noticed. Likely a tokenizer edge case.\nNo crash, just empty results for emoji queries."
+    },
+    {
+      "id": 9,
+      "source": "pagerduty",
+      "received_at": "2026-06-21T11:18:09Z",
+      "body": "[ALERT] background worker fleet: 0 jobs processed in 2h. Queue depth 51,402 and climbing.\nEmail, invoice generation, and nightly exports are all stalled. Consumers show as 'idle'.\nBroker reachable; workers not pulling. Growing customer-visible delay on emails/invoices. Platform on-call paged."
+    },
+    {
+      "id": 10,
+      "source": "support",
+      "received_at": "2026-06-21T11:40:55Z",
+      "body": "Ticket #88260: 'How do I change the email address on my account?' Just a how-to question.\nNo error, nothing broken. Reporter: 1 user. Answer is in the help center under Account > Profile."
+    },
+    {
+      "id": 11,
+      "source": "datadog",
+      "received_at": "2026-06-21T12:03:14Z",
+      "body": "[WARN] 2FA SMS delivery delayed ~5 min for a subset of carriers (est. 10% of sends).\nCodes DO arrive and still validate within the 10-min window. TOTP app users unaffected.\nUpstream SMS provider degraded; they have an open incident. Some users may retry. Workaround: use authenticator app."
+    },
+    {
+      "id": 12,
+      "source": "support",
+      "received_at": "2026-06-21T12:25:31Z",
+      "body": "Ticket #88277: homepage hero image looks slightly blurry on retina (2x) displays.\nStandard-DPI screens look fine. Purely cosmetic; a higher-res asset would fix it. 1 reporter."
+    }
+  ]
+}

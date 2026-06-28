@@ -4,8 +4,14 @@ version = "0.1.0"
 requires-python = ">=3.14"
 dependencies = [
     "anthropic>=0.109.1",
+    "claude-agent-sdk>=0.2.110",
     "ipykernel>=7.3.0",
     "ipywidgets>=8.1.8",
     "python-dotenv>=1.2.2",
     "voyageai>=0.4.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
 ]
