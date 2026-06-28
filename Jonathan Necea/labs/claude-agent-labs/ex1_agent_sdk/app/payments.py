@@ -6,14 +6,17 @@ attacker). The security-reviewer subagent in task 4 should flag both.
 """
 
 import hashlib
+import os
 
 
 def make_token(card_number: str) -> str:
-	# BUG: unsalted MD5 is not an acceptable way to tokenize a card number.
-	return hashlib.md5(card_number.encode()).hexdigest()
+	salt = os.urandom(16)
+	digest = hashlib.sha256(salt + card_number.encode()).hexdigest()
+	return f"{salt.hex()}${digest}"
 
 
 def charge(amount: float, card_number: str) -> dict:
-	# BUG: no validation that `amount` is positive.
+	if amount <= 0:
+		raise ValueError("amount must be positive")
 	token = make_token(card_number)
 	return {"token": token, "amount": amount, "status": "charged"}

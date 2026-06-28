@@ -47,7 +47,9 @@ TEST_WRITER = AgentDefinition(
 	prompt=(
 		"You are a test writer. Read the relevant files, write pytest tests that "
 		"reproduce the reported bugs (empty-list average, missing-key user, negative "
-		"charge amount), and run them with Bash. Report which pass and which fail."
+		"charge amount). Then ACTUALLY RUN them with Bash using `uv run pytest -v` from "
+		"the project (this selects the correct virtualenv where pytest and the code "
+		"live). Report the real run output and which tests pass and which fail."
 	),
 	tools=["Read", "Write", "Bash"],
 	model="sonnet",
@@ -75,7 +77,11 @@ async def main() -> int:
 			"security-reviewer": SECURITY_REVIEWER,
 			"test-writer": TEST_WRITER,
 		},
-		permission_mode="acceptEdits",
+		# bypassPermissions so the test-writer's Bash can actually EXECUTE the tests.
+		# acceptEdits only auto-approves edits (Write), NOT arbitrary command execution
+		# — which is why the subagent could write the test file but not run it. (Safe
+		# commands like `ls`/`git` slip through; running code like `pytest` does not.)
+		permission_mode="bypassPermissions",
 		cwd=str(HERE),
 	)
 	async for message in query(prompt=PARENT_PROMPT, options=options):

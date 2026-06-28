@@ -23,7 +23,15 @@ import json
 import sys
 from pathlib import Path
 
-from claude_agent_sdk import ClaudeAgentOptions, query
+from claude_agent_sdk import (
+	CLIConnectionError,
+	CLIJSONDecodeError,
+	CLINotFoundError,
+	ClaudeAgentOptions,
+	ClaudeSDKError,
+	ProcessError,
+	query,
+)
 
 # A path that does not exist — the agent will try to read it and fail.
 MISSING_PATH = "does/not/exist/nowhere.py"
@@ -35,8 +43,10 @@ async def run() -> dict:
 	record = {
 		"event": "agent_run",
 		"ok": False,
+		"error_category": None,
 		"error_type": None,
 		"error": None,
+		"details": None,
 		"turns_seen": 0,
 		"cost_usd": None,
 		"session_id": None,
@@ -63,9 +73,49 @@ async def run() -> dict:
 				if record["cost_usd"] is not None and record["cost_usd"] > COST_CEILING_USD:
 					record["over_budget"] = True
 		record["ok"] = not record["over_budget"]
-	except Exception as exc:  # noqa: BLE001 — task: collapse ANY failure to one line
-		# TODO(task 2): decide which exception types are worth distinguishing
-		# (e.g. CLINotFoundError vs. process errors) instead of catching them all.
+	# Distinguish failures by what an operator would DO about each one. Order matters:
+	# catch the most-specific subclass first (CLINotFoundError < CLIConnectionError <
+	# ClaudeSDKError), or the broader clause would shadow it.
+	except CLINotFoundError as exc:
+		# Setup problem: the Claude Code CLI isn't installed or isn't on PATH.
+		# Operator action: install the CLI / fix PATH.
+		record["error_category"] = "cli_not_found"
+		record["error_type"] = type(exc).__name__
+		# str(exc) already includes the searched path, e.g.
+		# "Claude Code not found: /usr/bin/claude" — no separate detail to capture.
+		record["error"] = str(exc)
+	except CLIConnectionError as exc:
+		# Couldn't reach or talk to the CLI process — often transient/retryable.
+		record["error_category"] = "connection"
+		record["error_type"] = type(exc).__name__
+		record["error"] = str(exc)
+	except ProcessError as exc:
+		# The CLI ran but exited non-zero (auth failure, bad flag, crash). The exit
+		# code and stderr are the most useful things to capture for debugging.
+		record["error_category"] = "process"
+		record["error_type"] = type(exc).__name__
+		record["error"] = str(exc)
+		record["details"] = {
+			"exit_code": getattr(exc, "exit_code", None),
+			"stderr": getattr(exc, "stderr", None),
+		}
+	except CLIJSONDecodeError as exc:
+		# The CLI emitted output the SDK couldn't parse — usually an SDK/CLI version
+		# skew. Capture the offending line so you can see what didn't parse.
+		record["error_category"] = "decode"
+		record["error_type"] = type(exc).__name__
+		record["error"] = str(exc)
+		record["details"] = {"line": getattr(exc, "line", None)}
+	except ClaudeSDKError as exc:
+		# Any other error from the SDK family — future-proofs us against new
+		# subclasses we haven't enumerated here.
+		record["error_category"] = "sdk"
+		record["error_type"] = type(exc).__name__
+		record["error"] = str(exc)
+	except Exception as exc:  # noqa: BLE001 — last resort: a bug on OUR side, not the SDK
+		# Not an SDK error at all (logic bug, asyncio issue, etc.). Flag it distinctly
+		# so it isn't mistaken for an agent/infrastructure failure.
+		record["error_category"] = "unexpected"
 		record["error_type"] = type(exc).__name__
 		record["error"] = str(exc)
 

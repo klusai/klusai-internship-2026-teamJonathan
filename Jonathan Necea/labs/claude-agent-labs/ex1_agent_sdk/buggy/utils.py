@@ -6,11 +6,15 @@ Both functions crash on perfectly normal inputs.
 
 
 def calculate_average(numbers):
-	# BUG: ZeroDivisionError when `numbers` is an empty list.
+	if not numbers:
+		return 0.0
 	return sum(numbers) / len(numbers)
 
 
 def get_user_name(user):
-	# BUG: KeyError when "name" is missing; AttributeError/TypeError when `user`
-	# is None. No defensive handling at all.
-	return user["name"].upper()
+	if not user:
+		return ""
+	name = user.get("name")
+	if not name:
+		return ""
+	return name.upper()

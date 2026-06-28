@@ -29,7 +29,12 @@ TAG = "labs-ex1"
 async def first_turn() -> str | None:
 	"""Run one turn; return its session_id."""
 	session_id = None
-	options = ClaudeAgentOptions(allowed_tools=[], max_turns=1)
+	# max_turns must leave room to reach a natural end-of-turn. With max_turns=1 the
+	# run hits the cap first, and the SDK RAISES that error result (error_max_turns)
+	# instead of yielding a ResultMessage — so session_id is never captured. A simple
+	# no-tool ack needs ~3 turns here; 5 gives margin at no extra cost (the model stops
+	# on its own once it has answered).
+	options = ClaudeAgentOptions(allowed_tools=[], max_turns=5)
 	async for message in query(
 		prompt="Remember this fact for later: my favorite number is 42.",
 		options=options,
@@ -45,7 +50,7 @@ async def resume_turn(session_id: str) -> None:
 	# FLAG: `resume=` is the expected resume mechanism; if your SDK uses a different
 	# name, check ClaudeAgentOptions for `resume` / `continue_conversation` /
 	# `fork_session`.
-	options = ClaudeAgentOptions(resume=session_id, allowed_tools=[], max_turns=1)
+	options = ClaudeAgentOptions(resume=session_id, allowed_tools=[], max_turns=5)
 	async for message in query(prompt="What is my favorite number?", options=options):
 		if type(message).__name__ == "AssistantMessage":
 			for block in getattr(message, "content", []):
@@ -66,12 +71,16 @@ def manage_sessions(session_id: str) -> None:
 		)
 		return
 
-	# TODO(task 3): if the helpers exist, call them. Names/signatures may vary —
-	# adjust to match your SDK. The intended behavior:
-	rename_session(session_id, "favorite-number-demo")  # give it a human name
-	tag_session(session_id, TAG)                          # tag it
-	tagged = list_sessions(tag=TAG)                       # list by tag
-	print(f"\nsessions tagged {TAG!r}: {tagged}")
+	# These helpers DO exist in this SDK version (0.2.110); they read/write the local
+	# on-disk session store. IMPORTANT: list_sessions() has NO `tag=` filter — it
+	# returns ALL sessions, so filter by the `.tag` field yourself.
+	rename_session(session_id, "favorite-number-demo")  # -> SDKSessionInfo.custom_title
+	tag_session(session_id, TAG)                         # -> SDKSessionInfo.tag
+	tagged = [si for si in list_sessions() if si.tag == TAG]
+	print(f"\nsessions tagged {TAG!r}: {len(tagged)} found")
+	for si in tagged:
+		marker = "  <- this run" if si.session_id == session_id else ""
+		print(f"  {si.session_id}  title={si.custom_title!r}{marker}")
 
 
 async def main() -> int:
