@@ -20,7 +20,7 @@ directory.
 ## Path-specific rules
 
 Two rule files live under `.claude/rules/`. They scope to subtrees via their
-`appliesTo` frontmatter and add constraints on top of these conventions:
+`paths` frontmatter and add constraints on top of these conventions:
 
 - `frontend/**` — see `.claude/rules/frontend.md`
 - `backend/**` — see `.claude/rules/backend.md`

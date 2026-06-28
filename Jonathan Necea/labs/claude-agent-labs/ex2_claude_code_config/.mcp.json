@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/jonathannecea/Repos/klusai/Jonathan Necea/labs/claude-agent-labs/ex2_claude_code_config"
+      ]
+    }
+  }
+}

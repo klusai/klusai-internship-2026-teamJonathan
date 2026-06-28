@@ -1,5 +1,5 @@
 ---
-appliesTo: "backend/**"
+paths: "backend/**"
 ---
 
 # Backend rules

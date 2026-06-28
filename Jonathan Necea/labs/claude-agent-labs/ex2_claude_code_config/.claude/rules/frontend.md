@@ -1,5 +1,5 @@
 ---
-appliesTo: "frontend/**"
+paths: "frontend/**"
 ---
 
 # Frontend rules
