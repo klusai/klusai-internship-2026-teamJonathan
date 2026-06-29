@@ -1,0 +1,15 @@
+Initech Software, Inc.
+INVOICE
+Number: 2026-DEC-441
+Date: 2026-03-15
+Tax ID (EIN): 95-1122334
+
+Billed to: Umbrella Corp
+
+Qty  Description                         Unit       Total
+  3  Pro license (annual seat)          240.00     720.00
+  1  Onboarding & training               500.00     500.00
+  1  Priority support add-on            120.00      120.00
+
+Currency: USD
+Balance due: 1340.00
