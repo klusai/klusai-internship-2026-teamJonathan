@@ -35,8 +35,17 @@ def build_document_block(corpus_text: str) -> dict:
 	citations ENABLED so the answer carries source spans, and a cache_control of type
 	'ephemeral' so the corpus is cached across repeated questions.
 	"""
-	# TODO: implement
-	raise NotImplementedError
+	return {
+		"type": "document",
+		"source": {
+			"type": "text",
+			"media_type": "text/plain",
+			"data": corpus_text,
+		},
+		"title": "Company annual report corpus",
+		"citations": {"enabled": True},
+		"cache_control": {"type": "ephemeral"},
+	}
 
 
 def main() -> int:

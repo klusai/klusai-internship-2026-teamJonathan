@@ -79,8 +79,17 @@ class BM25Index:
 		where f = how many times the term appears in this document's tokens, and
 		dl = this document's length in tokens. Terms not in the doc contribute 0.
 		"""
-		# TODO: implement
-		raise NotImplementedError
+		toks = self.doc_tokens[doc_idx]
+		dl = len(toks)
+		avgdl = self.avgdl
+		score = 0.0
+		for term in query_terms:
+			f = toks.count(term)
+			if f == 0:
+				continue
+			denom = f + K1 * (1 - B + B * dl / avgdl)
+			score += self.idf(term) * (f * (K1 + 1)) / denom
+		return score
 
 	def search(self, query: str, k: int = 3) -> list[tuple[str, float]]:
 		qterms = tokenize(query)
@@ -120,3 +129,20 @@ def main() -> int:
 
 if __name__ == "__main__":
 	raise SystemExit(main())
+
+
+# Results (K1=1.5, B=0.75):
+#   recall@1: 5/7 = 71%
+#   recall@2: 6/7 = 86%
+#   recall@3: 6/7 = 86%
+# Rare-term spotlight: Q3 "What is Project Halibut?" lands 'Halibut' at rank 1
+# (score=5.72). IDF makes the rare codename dominate the score, so the one section
+# that mentions it wins outright — exactly what pure semantic search can fumble.
+#
+# Query BM25 handles poorly: Q4 "What did the company do to keep employees from
+# leaving?" The answer section is about *attrition*, but the query shares no rare
+# terms with it — "keep employees from leaving" is a paraphrase, and the words it
+# does share ("company", "employees") are common and low-IDF. BM25 is lexical: with
+# no rare term overlap it cannot bridge the vocabulary gap between "keep employees
+# from leaving" and "attrition". This is the semantic-match case (ex2) that a hybrid
+# (ex4) recovers by combining lexical exactness with meaning.

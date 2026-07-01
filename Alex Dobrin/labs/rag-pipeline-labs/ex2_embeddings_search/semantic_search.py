@@ -46,11 +46,15 @@ COSINE_CASES = [
 def cosine_similarity(a: list[float], b: list[float]) -> float:
 	"""Cosine of the angle between two vectors: dot(a, b) / (||a|| * ||b||).
 
-	TODO(task 1): implement it. Return 0.0 if either vector has zero magnitude.
+	Return 0.0 if either vector has zero magnitude.
 	Range is -1.0 (opposite) to 1.0 (identical direction).
 	"""
-	# TODO: implement
-	raise NotImplementedError
+	dot = sum(x * y for x, y in zip(a, b))
+	norm_a = math.sqrt(sum(x * x for x in a))
+	norm_b = math.sqrt(sum(y * y for y in b))
+	if norm_a == 0.0 or norm_b == 0.0:
+		return 0.0
+	return dot / (norm_a * norm_b)
 
 
 def chunk_by_section(text: str) -> list[str]:

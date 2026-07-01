@@ -40,7 +40,20 @@ CANDIDATES = {
 # candidate documents and call rank_documents with the ids ordered most-relevant
 # first. Tell it to judge by what actually answers the query's intent, not surface
 # word overlap.
-RERANK_SYSTEM = ""  # TODO: fill in
+RERANK_SYSTEM = (
+	"You are a search reranker. You are given a user query and a set of candidate "
+	"documents, each wrapped in a <doc id=\"...\"> tag. Reorder ALL of the candidate "
+	"ids from most to least relevant to the query, then call the rank_documents tool "
+	"with that ordering.\n\n"
+	"Rank by what actually answers the query's underlying intent, not by surface word "
+	"overlap. A document that shares many words with the query but does not address "
+	"what the user is really asking should rank below one that directly answers the "
+	"intent even if it shares fewer words. Consider the question behind the question: "
+	"for example, 'what changed after the phishing attack' is about incident response "
+	"and remediation, not about whatever section happens to repeat the words 'change' "
+	"or 'team'.\n\n"
+	"Return every candidate id exactly once, most relevant first."
+)
 
 RANK_TOOL = {
 	"name": "rank_documents",

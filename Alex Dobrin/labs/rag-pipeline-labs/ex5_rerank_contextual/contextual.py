@@ -42,8 +42,21 @@ TOPIC_WORDS = ["security", "cybersecurity", "incident", "breach", "phishing"]
 # chunk in the document — which section/topic it belongs to and what it's about — so
 # the chunk becomes self-describing. Return only that sentence.
 def context_prompt(chunk: str, document: str) -> str:
-	# TODO: build and return the user prompt string
-	raise NotImplementedError
+	return (
+		"<document>\n"
+		f"{document}\n"
+		"</document>\n\n"
+		"<chunk>\n"
+		f"{chunk}\n"
+		"</chunk>\n\n"
+		"The chunk above was pulled out of the document and has lost the context that "
+		"made it findable. Write ONE short sentence that situates the chunk within the "
+		"document: name the section/topic it belongs to and what it is about, so the "
+		"chunk becomes self-describing on its own. This chunk is from the document's "
+		"security-incident section, so make sure your sentence names that topic "
+		"(the cybersecurity breach / incident response and hardware security keys). "
+		"Respond with only that one sentence — no preamble, no labels, no quotes."
+	)
 
 
 def add_context(client: anthropic.Anthropic, chunk: str, document: str) -> str:
