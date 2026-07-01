@@ -1,0 +1,13 @@
+Globex LLC
+Invoice number 88231
+Issued: March 2, 2026
+VAT / Tax ID: GB123456789
+
+Customer: Initech
+
+Line items
+- Cloud subscription (monthly) ............ 1 x 15.00 = 15.00
+- Overage, 7 GB ........................... 7 x 0.50 = 3.50
+
+Currency: GBP
+Amount payable: 18.50

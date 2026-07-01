@@ -1,0 +1,182 @@
+{
+  "_comment": "Precomputed candidate rankings per query (chunk = section slug). 'bm25' computed from corpus.md; 'vector' = representative Voyage semantic ranking. ex4 fuses these with RRF.",
+  "gold": {
+    "1": "software-engineering",
+    "2": "cybersecurity",
+    "3": "research-and-development",
+    "4": "people-and-culture",
+    "5": "sales-and-marketing",
+    "6": "finance",
+    "7": "customer-support"
+  },
+  "queries": {
+    "1": {
+      "query": "What did the software engineering team ship this year?",
+      "bm25": [
+        "software-engineering",
+        "executive-summary",
+        "customer-support",
+        "finance",
+        "people-and-culture",
+        "cybersecurity",
+        "sales-and-marketing",
+        "research-and-development",
+        "northwind-robotics-fy2024-annual-report"
+      ],
+      "vector": [
+        "software-engineering",
+        "executive-summary",
+        "research-and-development",
+        "customer-support",
+        "finance",
+        "cybersecurity",
+        "sales-and-marketing",
+        "people-and-culture"
+      ]
+    },
+    "2": {
+      "query": "How did the company respond to the 2023 security breach?",
+      "bm25": [
+        "cybersecurity",
+        "customer-support",
+        "finance",
+        "people-and-culture",
+        "executive-summary",
+        "software-engineering",
+        "sales-and-marketing",
+        "research-and-development",
+        "northwind-robotics-fy2024-annual-report"
+      ],
+      "vector": [
+        "cybersecurity",
+        "software-engineering",
+        "executive-summary",
+        "customer-support",
+        "people-and-culture",
+        "finance",
+        "sales-and-marketing",
+        "research-and-development"
+      ]
+    },
+    "3": {
+      "query": "What is Project Halibut?",
+      "bm25": [
+        "research-and-development",
+        "executive-summary",
+        "software-engineering",
+        "people-and-culture",
+        "sales-and-marketing",
+        "customer-support",
+        "northwind-robotics-fy2024-annual-report",
+        "cybersecurity",
+        "finance"
+      ],
+      "vector": [
+        "software-engineering",
+        "executive-summary",
+        "research-and-development",
+        "customer-support",
+        "finance",
+        "cybersecurity",
+        "sales-and-marketing",
+        "people-and-culture"
+      ]
+    },
+    "4": {
+      "query": "What did the company do to keep employees from leaving?",
+      "bm25": [
+        "executive-summary",
+        "customer-support",
+        "finance",
+        "people-and-culture",
+        "cybersecurity",
+        "software-engineering",
+        "sales-and-marketing",
+        "research-and-development",
+        "northwind-robotics-fy2024-annual-report"
+      ],
+      "vector": [
+        "people-and-culture",
+        "customer-support",
+        "finance",
+        "software-engineering",
+        "sales-and-marketing",
+        "executive-summary",
+        "cybersecurity",
+        "research-and-development"
+      ]
+    },
+    "5": {
+      "query": "How much did annual recurring revenue grow?",
+      "bm25": [
+        "sales-and-marketing",
+        "northwind-robotics-fy2024-annual-report",
+        "customer-support",
+        "finance",
+        "executive-summary",
+        "software-engineering",
+        "cybersecurity",
+        "people-and-culture",
+        "research-and-development"
+      ],
+      "vector": [
+        "sales-and-marketing",
+        "finance",
+        "executive-summary",
+        "customer-support",
+        "software-engineering",
+        "people-and-culture",
+        "cybersecurity",
+        "research-and-development"
+      ]
+    },
+    "6": {
+      "query": "What was the gross margin?",
+      "bm25": [
+        "executive-summary",
+        "finance",
+        "cybersecurity",
+        "sales-and-marketing",
+        "software-engineering",
+        "research-and-development",
+        "people-and-culture",
+        "customer-support",
+        "northwind-robotics-fy2024-annual-report"
+      ],
+      "vector": [
+        "finance",
+        "sales-and-marketing",
+        "executive-summary",
+        "software-engineering",
+        "customer-support",
+        "people-and-culture",
+        "cybersecurity",
+        "research-and-development"
+      ]
+    },
+    "7": {
+      "query": "How quickly does support respond to customers now?",
+      "bm25": [
+        "customer-support",
+        "research-and-development",
+        "software-engineering",
+        "finance",
+        "sales-and-marketing",
+        "people-and-culture",
+        "cybersecurity",
+        "northwind-robotics-fy2024-annual-report",
+        "executive-summary"
+      ],
+      "vector": [
+        "customer-support",
+        "people-and-culture",
+        "software-engineering",
+        "finance",
+        "sales-and-marketing",
+        "cybersecurity",
+        "research-and-development",
+        "executive-summary"
+      ]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "_comment": "Gold for ex2. cosine_similarity is graded offline by COSINE_CASES (mirrored here). Live semantic recall depends on the Voyage model and is not a fixed number — grade on the qualitative wins instead.",
+  "cosine_cases": [
+    {"a": [1.0, 0.0], "b": [1.0, 0.0], "expected": 1.0},
+    {"a": [1.0, 0.0], "b": [0.0, 1.0], "expected": 0.0},
+    {"a": [1.0, 2.0, 3.0], "b": [2.0, 4.0, 6.0], "expected": 1.0},
+    {"a": [1.0, 0.0], "b": [-1.0, 0.0], "expected": -1.0},
+    {"a": [0.0, 0.0], "b": [1.0, 0.0], "expected": 0.0}
+  ],
+  "zero_magnitude_returns": 0.0,
+  "qualitative": {
+    "semantic_win": {"query_id": 4, "expect": "retrieves people-and-culture (attrition) despite no shared words"},
+    "semantic_weakness": {"query_id": 3, "expect": "ranks research-and-development (Halibut) below the lexical winner"}
+  }
+}
