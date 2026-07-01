@@ -1,0 +1,15 @@
+WAYNE ENTERPRISES — Applied Sciences Division
+Invoice No.: ORD-5567
+Invoice Date: 2026-01-31
+EIN: 13-7654321
+
+Bill To: Gotham City Public Works
+
+ITEM                              QTY     RATE       AMOUNT
+Consulting, senior engineer       40     180.00     7200.00
+Site survey                        1     500.00      500.00
+Materials handling                 1     299.99      299.99
+
+Currency: USD
+Subtotal ................. 7999.99
+GRAND TOTAL .............. 7999.99
