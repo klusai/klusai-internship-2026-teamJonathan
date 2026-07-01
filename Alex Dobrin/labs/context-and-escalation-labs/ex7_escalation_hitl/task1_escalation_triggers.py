@@ -33,7 +33,33 @@ HERE = Path(__file__).parent
 # and the "standard steps exhausted" idea behind no_progress. The classifier reads
 # this as its system prompt, so be specific: vague guidance loses the borderline
 # cases.
-POLICY = ""  # TODO: fill in
+POLICY = """You are a customer-support triage agent. For each situation, decide whether \
+to HANDLE it yourself or ESCALATE it to a human, and name the single trigger that \
+drives the decision. Always call route_request exactly once.
+
+Decide ESCALATE when ANY one of these three triggers is true; otherwise HANDLE.
+
+- policy_gap — the request is outside what you are authorized to do. This includes:
+  refunds/credits above the auto-approve limit of $50; account deletion or permanent
+  erasure of data; anything legal (lawsuits, legal advice, liability); and any action
+  the policy does not explicitly permit or is silent about. Trigger = "policy_gap".
+
+- user_request — the user explicitly asks to speak to a human / real agent, or to
+  stop talking to the bot. Their words request a person, regardless of the underlying
+  issue. Trigger = "user_request".
+
+- no_progress — the standard troubleshooting steps have been exhausted, the user says
+  nothing suggested has worked, or they are contacting you again about the same
+  unresolved problem (repeat contact). Trigger = "no_progress".
+
+HANDLE when the request is a normal self-serve task within your authority: how-to
+questions, static FAQs (hours, policies), order status lookups, and account changes
+the policy allows (e.g. changing the shipping address on an order that has not
+shipped, refunds within the $50 limit). For a HANDLE decision, trigger = "none".
+
+Pick the trigger that most directly caused the decision. If more than one could
+apply, prefer an explicit user_request, then policy_gap, then no_progress. Never
+invent a trigger for a HANDLE case — use "none"."""
 
 CLASSIFY_TOOL = {
 	"name": "route_request",

@@ -108,8 +108,9 @@ def requires_approval(tool_name: str) -> bool:
 	TODO(task 3): a tool needs approval iff it is in HIGH_RISK_TOOLS. Read-only
 	tools (lookup_order, get_account) must return False so they run automatically.
 	"""
-	# TODO: implement
-	raise NotImplementedError
+	# A tool needs human approval iff it is high-risk. Read-only tools
+	# (lookup_order, get_account) fall through to False and run automatically.
+	return tool_name in HIGH_RISK_TOOLS
 
 
 def approve(tool_name: str, tool_input: dict) -> bool:

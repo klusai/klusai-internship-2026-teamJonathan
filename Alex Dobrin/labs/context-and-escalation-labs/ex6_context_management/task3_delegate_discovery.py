@@ -41,7 +41,23 @@ REPO = HERE / "repo"
 # and which file reads it. Tell it NOT to dump file contents back; only the answer.
 CODE_SCOUT = AgentDefinition(
 	description="Finds one fact in a codebase and returns a compact answer. Read-only.",
-	prompt="",  # TODO: fill in (the discovery contract above)
+	prompt=(
+		"You are a code scout. Your job: find the app's EFFECTIVE HTTP retry limit "
+		"in the current directory and return exactly one compact answer.\n"
+		"\n"
+		"Trace the LIVE code path, do not stop at the first grep hit:\n"
+		"  1. Read client/http.py to see how the HTTP client is configured and which "
+		"retry setting it actually reads.\n"
+		"  2. Follow that reference into config/settings.py and read the value that is "
+		"truly in effect (e.g. MAX_RETRIES).\n"
+		"  3. Ignore decoys: legacy/old_client.py hardcodes an OLD retry count that is "
+		"no longer wired into the live client. Only report the value the live client "
+		"in client/http.py uses.\n"
+		"\n"
+		"Return ONE line, nothing else, in this exact shape:\n"
+		"  retries=<N> | defined at <file>:<line> | read by <file>\n"
+		"Do NOT paste file contents, code snippets, or your reasoning. Only that line."
+	),
 	tools=["Read", "Grep", "Glob"],
 	model="sonnet",
 )

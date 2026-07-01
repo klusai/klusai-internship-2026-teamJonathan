@@ -92,8 +92,9 @@ def append_finding(scratchpad_path: Path, finding: dict) -> None:
 	(open in append mode so each record adds exactly one line). This file — not the
 	conversation — is the durable memory.
 	"""
-	# TODO: implement
-	raise NotImplementedError
+	line = f"- {finding['severity']}  #{finding['id']}  {finding['one_line']}\n"
+	with scratchpad_path.open("a") as f:
+		f.write(line)
 
 
 def synthesize(client: anthropic.Anthropic, scratchpad_path: Path) -> str:
@@ -103,8 +104,23 @@ def synthesize(client: anthropic.Anthropic, scratchpad_path: Path) -> str:
 	short shift summary: the count per severity and which incidents are P1. The
 	whole point is that this call's input is the small scratchpad, not 12 logs.
 	"""
-	# TODO: implement
-	raise NotImplementedError
+	scratchpad = scratchpad_path.read_text()
+	resp = client.messages.create(
+		model=MODEL,
+		max_tokens=512,
+		system=(
+			"You write a brief end-of-shift triage summary from a scratchpad of "
+			"one-line findings. Report the count per severity (P1/P2/P3) and list "
+			"which incidents are P1 by their #id. Use only the scratchpad below."
+		),
+		messages=[
+			{
+				"role": "user",
+				"content": f"Summarize this shift:\n\n<scratchpad>\n{scratchpad}\n</scratchpad>",
+			}
+		],
+	)
+	return next((b.text for b in resp.content if b.type == "text"), "")
 
 
 def main() -> int:

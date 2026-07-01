@@ -11,7 +11,7 @@ log, count the tokens of the distilled summary, and record both. You should see 
 large reduction with no loss of the facts that matter.
 
 Setup:
-    pip install anthropic
+    pip install anthropic	
     export ANTHROPIC_API_KEY=sk-ant-...
     python task1_extract_facts.py
 """
@@ -82,7 +82,25 @@ SUMMARIZE_TOOL = {
 # report_log_facts with ONLY the load-bearing facts — drop the pip output, the
 # PASSED lines, the warnings, and the coverage table. It must never invent a
 # number; if a field isn't in the log, omit it (when optional) rather than guess.
-SYSTEM = ""  # TODO: fill in
+SYSTEM = """You distill a verbose CI/test log into only its load-bearing facts.
+
+Read the log between the <log> tags and call the report_log_facts tool exactly
+once. Extract ONLY the facts that matter for understanding the run:
+
+- outcome: "failed" if any test failed, otherwise "passed".
+- tests_total, tests_passed, tests_failed, tests_skipped: the run's counts.
+- duration_seconds: the wall-clock duration of the run.
+- failures: one entry per failing test, each with its fully-qualified test id
+  (e.g. tests/test_x.py::test_y) and the exception/assertion class that caused
+  it (e.g. KeyError, AssertionError).
+
+Ignore everything that is not load-bearing: the pip/dependency install output,
+the per-test PASSED lines, deprecation/warning summaries, and the coverage
+table. None of that belongs in the summary.
+
+Use only values that appear verbatim in the log. Never invent, infer, or round a
+number, a test id, or an error type. If an optional field is not present in the
+log, omit it rather than guessing. Report only tests the log marks as FAILED."""
 
 
 def count_tokens(client: anthropic.Anthropic, text: str) -> int:

@@ -66,8 +66,20 @@ def route(confidence: float, action_type: str) -> str:
 	     floor it at REVIEW. (ESCALATE is stricter than REVIEW, so a low-confidence
 	     high-risk action still ESCALATEs.)
 	"""
-	# TODO: implement
-	raise NotImplementedError
+	# 1. Base route from the confidence band (thresholds are inclusive).
+	if confidence >= AUTO_THRESHOLD:
+		base = "AUTO"
+	elif confidence >= REVIEW_THRESHOLD:
+		base = "REVIEW"
+	else:
+		base = "ESCALATE"
+
+	# 2. Guardrail: a HIGH_RISK action must never be AUTO — floor it at REVIEW.
+	# ESCALATE is stricter than REVIEW, so a low-confidence high-risk action still
+	# ESCALATEs (we only knock AUTO down, never lift ESCALATE up).
+	if action_type in HIGH_RISK and base == "AUTO":
+		return "REVIEW"
+	return base
 
 
 PROPOSE_TOOL = {
