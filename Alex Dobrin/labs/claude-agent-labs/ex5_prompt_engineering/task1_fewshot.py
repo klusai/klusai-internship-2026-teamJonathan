@@ -30,7 +30,11 @@ SYSTEM = (
 # TODO(task 1): fill this in with a handful of labeled examples (few-shot).
 # Format is up to you — e.g. lines like:  "Login throws a 500." -> bug
 # Start empty (zero-shot), record accuracy, then add examples and compare.
-FEWSHOT = ""
+FEWSHOT = ("bug: Clicking a dedicated button for displaying information about a file only shows generic information not corelationg to the specific file.\n"
+		   "bug: Not sure if this is intended, but i can save the same file with no differences, overwriting the original file without asking me before.\n"
+		   "feature: Create a button that prints information about a specific file.\n"
+		   "feature: this UI is confusing and I dont like using it\n"
+		   "question: How do I get the name of a file?")
 
 
 def classify(client: anthropic.Anthropic, text: str) -> str:

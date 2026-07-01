@@ -1,0 +1,15 @@
+INVOICE  — SCANNED COPY (OCR partly garbled, page torn)
+
+V#ndor: █████ TRAD1NG ████
+Invoice #: INV-?????
+Date: ../../20..
+
+Bill to: [unreadable]
+
+Description                     Qty    Unit price    Amount
+Consulting, on-site             ??        150.00      900.00
+Materials (water-damaged)        3          ~~          ~~
+Late fee                          1        25.00       25.00
+
+Subtotal: 1,240.00
+TOTAL DUE: 1,725.00   <-- handwritten, does not match line items

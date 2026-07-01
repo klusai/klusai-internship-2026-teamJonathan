@@ -30,8 +30,11 @@ VAGUE_PROMPT = "Review this diff and tell me about any problems.\n\n{diff}"
 CRITERIA = [
 	"Security: flag any SQL built by string concatenation / f-strings (injection risk).",
 	# TODO: add a criterion about exception handling (bare except / except: pass).
+	"Exception Handling: flag any bare except / bare pass statements.",
 	# TODO: add a criterion about password hashing (unsalted / fast hashes like MD5).
+	"Password Hashing: flag any unsalted MD5 password hashing, or any relevant and possible password-related leaks.",
 	# TODO: add any other criteria you think a reviewer should always apply.
+	"Other: carefully analyze and flag any other security-related issues.",
 ]
 
 EXPLICIT_PROMPT = (

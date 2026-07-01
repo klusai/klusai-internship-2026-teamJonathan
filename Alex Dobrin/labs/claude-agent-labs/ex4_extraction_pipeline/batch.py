@@ -19,7 +19,7 @@ import jsonschema
 from anthropic.types.message_create_params import MessageCreateParamsNonStreaming
 from anthropic.types.messages.batch_create_params import Request
 
-from schema import EXTRACT_TOOL, INVOICE_SCHEMA
+from schema import EXTRACT_TOOL, INVOICE_SCHEMA, line_item_mismatch
 
 MODEL = "claude-opus-4-8"
 HERE = Path(__file__).parent
@@ -30,6 +30,16 @@ SYSTEM = (
 	"with the fields you find. If the invoice shows no tax/VAT/EIN number, set "
 	"tax_id to null — never guess one."
 )
+
+# Prompt-cache the shared prefix (tools + system) so every request after the
+# first reads it from cache instead of reprocessing it. The breakpoint goes on
+# the last system block, which caches the tool definitions ahead of it too.
+# Note: Opus needs a 4096-token cacheable prefix, so this short prompt won't
+# actually populate the cache — the wiring is the point. Enlarge the prefix (or
+# watch usage.cache_read_input_tokens) to see real hits.
+SYSTEM_BLOCKS = [
+	{"type": "text", "text": SYSTEM, "cache_control": {"type": "ephemeral"}}
+]
 
 
 def build_requests() -> list[Request]:
@@ -43,7 +53,7 @@ def build_requests() -> list[Request]:
 				params=MessageCreateParamsNonStreaming(
 					model=MODEL,
 					max_tokens=1024,
-					system=SYSTEM,
+					system=SYSTEM_BLOCKS,
 					tools=[EXTRACT_TOOL],
 					tool_choice={"type": "tool", "name": "extract_invoice"},
 					messages=[
@@ -88,18 +98,24 @@ def main() -> int:
 			continue
 		data = tool_use.input
 
-		# TODO(task 3): validate `data` against INVOICE_SCHEMA. On success store it
-		# in `results[cid]`; on jsonschema.ValidationError record the message in
-		# `failures[cid]`. (The Batches API has no per-item retry — note which
-		# invoices you'd resubmit.)
+		# Validate against INVOICE_SCHEMA, then run the line-item cross-check. On
+		# success store the data; on either failure record the reason. The Batches
+		# API has no per-item retry, so a failure here (e.g. malformed inv_07) is
+		# an invoice you'd note and resubmit in a new batch — not a crash.
 		try:
 			jsonschema.validate(data, INVOICE_SCHEMA)
-			results[cid] = data
 		except jsonschema.ValidationError as err:
-			failures[cid] = f"invalid: {err.message}"
+			failures[cid] = f"invalid at {err.json_path}: {err.message}"
+			continue
 
-	# TODO(task 3): aggregate — e.g. total of all `total` fields, and which
-	# invoices had tax_id == null (expect inv_03 and inv_05).
+		mismatch = line_item_mismatch(data)
+		if mismatch is not None:
+			failures[cid] = f"line-item mismatch: {mismatch}"
+		else:
+			results[cid] = data
+
+	# Aggregate: sum every `total`, and list invoices with no tax_id
+	# (expect inv_03 and inv_05).
 	grand_total = sum(r["total"] for r in results.values())
 	no_tax_id = sorted(cid for cid, r in results.items() if r.get("tax_id") is None)
 

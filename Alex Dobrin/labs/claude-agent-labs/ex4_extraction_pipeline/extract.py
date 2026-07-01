@@ -18,7 +18,7 @@ from pathlib import Path
 import anthropic
 import jsonschema
 
-from schema import EXTRACT_TOOL, INVOICE_SCHEMA
+from schema import EXTRACT_TOOL, INVOICE_SCHEMA, line_item_mismatch
 
 MODEL = "claude-opus-4-8"
 MAX_ATTEMPTS = 3
@@ -55,20 +55,23 @@ def extract_one(client: anthropic.Anthropic, text: str) -> dict:
 			raise RuntimeError("Model did not call extract_invoice.")
 		data = tool_use.input
 
-		# TODO(task 1): validate `data` against INVOICE_SCHEMA using jsonschema.
-		# On success, return `data`. On jsonschema.ValidationError, capture the
-		# error message in `last_error` and fall through to the feedback step.
+		# Validate against INVOICE_SCHEMA, then run the line-item cross-check
+		# (sum of amounts ≈ total). On success return; on either failure capture
+		# the message and fall through to the feedback step.
 		try:
 			jsonschema.validate(data, INVOICE_SCHEMA)
-			return data
 		except jsonschema.ValidationError as err:
-			last_error = err.message
-			print(f"  attempt {attempt}: invalid — {err.message}", file=sys.stderr)
+			last_error = f"At {err.json_path}: {err.message}"
+		else:
+			last_error = line_item_mismatch(data)
+			if last_error is None:
+				return data
 
-		# TODO(task 2): feed the error back so the model can correct itself.
-		# Append the assistant's tool_use turn, then a user turn containing a
-		# tool_result block that references `tool_use.id`, sets "is_error": True,
-		# and explains what was wrong. Then the loop calls the API again.
+		print(f"  attempt {attempt}: invalid — {last_error}", file=sys.stderr)
+
+		# Feed the error back so the model can correct itself: replay the
+		# assistant's tool_use turn, then answer it with an error tool_result
+		# referencing tool_use.id. The loop then calls the API again.
 		messages.append({"role": "assistant", "content": resp.content})
 		messages.append(
 			{
@@ -96,7 +99,13 @@ def main() -> int:
 		return 2
 	text = Path(sys.argv[1]).read_text()
 	client = anthropic.Anthropic()
-	data = extract_one(client, text)
+	# A malformed invoice (e.g. inv_07) can exhaust every retry. Surface that as
+	# a clean error and a non-zero exit, not a traceback.
+	try:
+		data = extract_one(client, text)
+	except RuntimeError as err:
+		print(f"extraction failed: {err}", file=sys.stderr)
+		return 1
 	print(json.dumps(data, indent=2))
 	return 0
 

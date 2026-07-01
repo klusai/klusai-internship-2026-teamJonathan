@@ -51,3 +51,22 @@ EXTRACT_TOOL = {
 	),
 	"input_schema": INVOICE_SCHEMA,
 }
+
+# Cross-field invariant jsonschema can't express: the line-item amounts should
+# add up to the invoice total. We check it in code (within one cent, to tolerate
+# rounding) and feed any mismatch back to the model the same way a schema error
+# is fed back.
+LINE_ITEM_TOLERANCE = 0.01
+
+
+def line_item_mismatch(data: dict) -> str | None:
+	"""Return an error message if line-item amounts don't sum to `total`, else None."""
+	line_sum = sum(item["amount"] for item in data["line_items"])
+	total = data["total"]
+	if abs(line_sum - total) > LINE_ITEM_TOLERANCE:
+		return (
+			f"line_items amounts sum to {line_sum:.2f} but total is {total:.2f} "
+			f"(difference {abs(line_sum - total):.2f} exceeds {LINE_ITEM_TOLERANCE:.2f}). "
+			"Re-read the invoice and correct either the line items or the total."
+		)
+	return None
