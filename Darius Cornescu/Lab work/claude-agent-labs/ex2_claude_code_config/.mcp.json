@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "ex2-fs": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "."
+      ]
+    }
+  }
+}
