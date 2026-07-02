@@ -14,6 +14,7 @@ def make_token(card_number: str) -> str:
 
 
 def charge(amount: float, card_number: str) -> dict:
-	# BUG: no validation that `amount` is positive.
+	if amount <= 0:
+		raise ValueError("amount must be positive")
 	token = make_token(card_number)
 	return {"token": token, "amount": amount, "status": "charged"}
