@@ -66,12 +66,19 @@ def manage_sessions(session_id: str) -> None:
 		)
 		return
 
-	# TODO(task 3): if the helpers exist, call them. Names/signatures may vary —
-	# adjust to match your SDK. The intended behavior:
-	rename_session(session_id, "favorite-number-demo")  # give it a human name
+	# task 3: the helpers DO exist in claude-agent-sdk 0.2.110, but their real
+	# signatures differ from the original brief. Verified against the installed SDK:
+	#   rename_session(session_id, title, directory=None)   -> appends a custom title
+	#   tag_session(session_id, tag, directory=None)          -> pass None to clear
+	#   list_sessions(directory=None, limit=None, offset=0, include_worktrees=True)
+	#       -> returns list[SDKSessionInfo]; there is NO `tag=` filter, so we filter
+	#          on the returned objects' `.tag` field ourselves.
+	rename_session(session_id, "favorite-number-demo")  # give it a human title
 	tag_session(session_id, TAG)                          # tag it
-	tagged = list_sessions(tag=TAG)                       # list by tag
-	print(f"\nsessions tagged {TAG!r}: {tagged}")
+	tagged = [s for s in list_sessions() if s.tag == TAG]  # filter by tag in Python
+	print(f"\nsessions tagged {TAG!r}: {len(tagged)}")
+	for info in tagged:
+		print(f"  - {info.session_id}  title={info.custom_title!r}  tag={info.tag!r}")
 
 
 async def main() -> int:
