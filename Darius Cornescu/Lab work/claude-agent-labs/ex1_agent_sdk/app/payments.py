@@ -6,11 +6,15 @@ attacker). The security-reviewer subagent in task 4 should flag both.
 """
 
 import hashlib
+import os
 
 
 def make_token(card_number: str) -> str:
-	# BUG: unsalted MD5 is not an acceptable way to tokenize a card number.
-	return hashlib.md5(card_number.encode()).hexdigest()
+	# Tokenize the card number with a per-call random salt and a slow KDF so the
+	# token is salted and not reversible via rainbow tables.
+	salt = os.urandom(16)
+	derived = hashlib.pbkdf2_hmac("sha256", card_number.encode(), salt, 100_000)
+	return salt.hex() + ":" + derived.hex()
 
 
 def charge(amount: float, card_number: str) -> dict:
