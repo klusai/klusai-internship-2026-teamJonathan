@@ -23,7 +23,15 @@ import json
 import sys
 from pathlib import Path
 
-from claude_agent_sdk import ClaudeAgentOptions, query
+from claude_agent_sdk import (
+	ClaudeAgentOptions,
+	ClaudeSDKError,
+	CLIConnectionError,
+	CLIJSONDecodeError,
+	CLINotFoundError,
+	ProcessError,
+	query,
+)
 
 # A path that does not exist — the agent will try to read it and fail.
 MISSING_PATH = "does/not/exist/nowhere.py"
@@ -36,6 +44,7 @@ async def run() -> dict:
 		"event": "agent_run",
 		"ok": False,
 		"error_type": None,
+		"fault_domain": None,
 		"error": None,
 		"turns_seen": 0,
 		"cost_usd": None,
@@ -63,10 +72,32 @@ async def run() -> dict:
 				if record["cost_usd"] is not None and record["cost_usd"] > COST_CEILING_USD:
 					record["over_budget"] = True
 		record["ok"] = not record["over_budget"]
-	except Exception as exc:  # noqa: BLE001 — task: collapse ANY failure to one line
-		# TODO(task 2): decide which exception types are worth distinguishing
-		# (e.g. CLINotFoundError vs. process errors) instead of catching them all.
-		record["error_type"] = type(exc).__name__
+	# task 2: distinguish the failures worth acting on differently. `fault_domain`
+	# tells an operator WHERE the failure lives, which drives the response:
+	#   - "setup"     -> the Claude Code CLI isn't installed/on PATH. Not retryable;
+	#                    fix the environment. (CLINotFoundError)
+	#   - "transport" -> the CLI ran but the connection/stream broke or returned
+	#                    malformed JSON. Often transient -> a retry may help.
+	#   - "process"   -> the CLI process itself exited non-zero (bad flags, auth,
+	#                    crash). Inspect exit_code/stderr before retrying.
+	#   - "sdk"       -> any other ClaudeSDKError we didn't special-case.
+	#   - "unknown"   -> a non-SDK exception leaked through; a real bug to chase.
+	except CLINotFoundError as exc:
+		record["error_type"], record["fault_domain"] = type(exc).__name__, "setup"
+		record["error"] = str(exc)
+	except (CLIConnectionError, CLIJSONDecodeError) as exc:
+		record["error_type"], record["fault_domain"] = type(exc).__name__, "transport"
+		record["error"] = str(exc)
+	except ProcessError as exc:
+		record["error_type"], record["fault_domain"] = type(exc).__name__, "process"
+		record["error"] = str(exc)
+		# ProcessError carries the CLI's exit code — surface it for triage.
+		record["exit_code"] = getattr(exc, "exit_code", None)
+	except ClaudeSDKError as exc:
+		record["error_type"], record["fault_domain"] = type(exc).__name__, "sdk"
+		record["error"] = str(exc)
+	except Exception as exc:  # noqa: BLE001 — last resort: still collapse to one line
+		record["error_type"], record["fault_domain"] = type(exc).__name__, "unknown"
 		record["error"] = str(exc)
 
 	return record
